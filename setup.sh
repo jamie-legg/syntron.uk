@@ -6,6 +6,9 @@ mkdir -p syn_uk_settings/maps
 # Create var directory
 mkdir -p syn_uk_settings/var
 
+# Default output consolelog
+touch syn_uk_settings/var/consolelog.txt
+
 # Create settings.cfg
 cat > syn_uk_settings/var/settings_custom.cfg <<EOL
 RINCLUDE vov/games/sumo/bar_v1.cfg
@@ -35,8 +38,6 @@ Enjoy the game and have fun!
 EOL
 
 
-# Default output consolelog
-touch syn_uk_settings/var/consolelog.txt
 
 # Create a sample sumo map
 cat > syn_uk_settings/maps/sumo_map1.txt <<EOL
