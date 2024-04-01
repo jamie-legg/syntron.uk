@@ -19,7 +19,7 @@ SERVER_NAME 0x6a33ffC0x6233ffa0x5a33ffs0x5233ffu0x4a33ffa0x4333ffl | 0x4333ffT0x
 TALK_TO_MASTER 1
 GLOBAL_ID 1
 SP_TEAM_MAX_PLAYERS 1
-OP rxsyn@forums 0
+USER_LEVEL rxsyn@forums 0
 EOL
 
 # Create script.txt
