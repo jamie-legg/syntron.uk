@@ -1,85 +1,51 @@
-'use client' 
+"use client";
 
-import React, { useRef, useState, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { PerspectiveCamera, Grid, SpotLight } from '@react-three/drei';
-import { Color, ColorRepresentation } from 'three';
+import React from "react";
+import { Canvas } from "@react-three/fiber";
+import { CameraControls } from "./camera/CameraControls";
+import { DashboardTile } from "./dashboard/DashboardTile";
+import { TextGeometry } from "three/examples/jsm/Addons.js";
+import { Text3D } from "@react-three/drei";
+import { Inter } from "next/font/google";
 
-const CameraControls = () => {
-  const camera = useRef<any>();
-  const plane = useRef<any>();
-  const light = useRef<any>();
-  const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+const IndexPage: React.FC = () => {
+  const tiles = [
+    { color: "green", text: "How to Play" },
+    { color: "blue", text: "Get Good" },
+    { color: "yellow", text: "Aesthetics" },
+    { color: "red", text: "Community" },
+    { color: "pink", text: "Hall of Fame" },
+    { color: "purple", text: "Creators" },
+    { color: "indigo", text: "Tools & Resources" },
+    { color: "gray", text: "Download" },
+    { color: "black", text: "Get a login" },
+  ];
 
-  useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      setMousePosition({
-        x: (event.clientX / window.innerWidth) * 2 - 1,
-        y: -(event.clientY / window.innerHeight) * 2 + 1,
-      });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
-  useFrame(() => {
-    if (plane.current) {
-      const rotationX = Math.min(Math.max(mousePosition.y * 0.5 + 0.6, 0), 1) * Math.PI * 0.2;
-      const rotationY = Math.min(Math.max(mousePosition.x * 0.5 + 0.5, 0), 1) * Math.PI * 0.2;
-      plane.current.rotation.x = rotationX;
-      plane.current.rotation.y = rotationY;
-    }
-  });
-
-  const gradientColorRepresentation = (start: string, end: string): ColorRepresentation => {
-
-const color = new Color(start);
-return color.lerpColors(new Color(start), new Color(end), 1);
-  }
 
   return (
     <>
-      <PerspectiveCamera ref={camera} position={[0, 0, 5]} />
-      <Grid ref={plane} sectionThickness={2} infiniteGrid fadeDistance={100} fadeStrength={10} />
-    </>
-  );
-};
-
-const IndexPage = () => {
-  return (
-    <>
-    <div className='z-10 absolute top-0'>
-      <div className='h-screen w-screen overflow-hidden'>
-        <div className="flex w-full justify-center h-full items-center">
-        {/* 3x3 grid */}
-          <div className="grid grid-cols-3 gap-4">
-            <div className="bg-red-500 h-32 w-32">
-            Join the Discord!</div>
-            <div className="bg-green-500 h-32 w-32">
-            How to Play
-            </div>
-            <div className="bg-blue-500 h-32 w-32">
-            Tools
-            </div>
-            <div className="bg-yellow-500 h-32 w-32"></div>
-            <div className="bg-pink-500 h-32 w-32"></div>
-            <div className="bg-purple-500 h-32 w-32"></div>
-            <div className="bg-indigo-500 h-32 w-32"></div>
-            <div className="bg-gray-500 h-32 w-32"></div>
-            <div className="bg-black h-32 w-32"></div>
-          </div>
-        
+      <div className="z-10 absolute top-0">
+      <div className="ml-2 mt-2">
+        <div className="bg-black bg-opacity-80 w-screen h-max flex justify-left items-center tracking-widest uppercase">
+          <h1 className="text-sky-800 text-2xl font-bold">Syntron.uk |</h1>
+          <h1 className="text-sky-400 text-2xl font-bold">&nbsp;Home</h1>
         </div>
       </div>
-    </div>
-    <Canvas style={{ height: '100vh', background: '#000000' }}>
-      <CameraControls />
+        <div className="h-screen w-screen overflow-hidden">
+          <div className="flex w-full justify-center h-full items-center">
+            <div className="grid grid-cols-3 gap-4">
+              {tiles.map((tile) => (
+                <DashboardTile key={tile.text}>{tile.text}</DashboardTile>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <Canvas style={{ height: "100vh", background: "#000000" }}>
 
-    </Canvas>
+
+                <CameraControls />
+      </Canvas>
     </>
   );
 };
