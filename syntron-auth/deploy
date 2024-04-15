@@ -1,0 +1,80 @@
+#!/bin/bash
+
+
+
+# Load environment variables
+ENV_PATH="../.env"
+if [ -f $ENV_PATH ]; then
+    export $(cat $ENV_PATH | sed 's/#.*//g' | xargs)
+else
+    echo "Error: .env file not found at $ENV_PATH."
+    exit 1
+fi
+
+# Check if all required environment variables are set
+if [ -z "$SERVER_USER" ] || [ -z "$SERVER_IP" ] || [ -z "$DESTINATION_PATH" ] || [ -z "$SSH_PASSWORD" ]; then
+    echo "Error: One or more environment variables are undefined."
+    echo "Make sure SERVER_USER, SERVER_IP, DESTINATION_PATH, and SSH_PASSWORD are set in .env."
+    exit 1
+fi
+
+APP_NAME="armaauth"
+LOCAL_BUILD_PATH="./build"
+ARCHIVE_NAME="build.tar.gz"
+
+# Step 1: Clean previous builds
+echo "Cleaning previous builds..."
+rm -rf $LOCAL_BUILD_PATH
+mkdir $LOCAL_BUILD_PATH
+
+# Step 2: Build your project (optional)
+echo "Building the project..."
+tsc # assuming TypeScript files are properly configured with tsconfig.json
+if [ ! -d dist/ ]; then
+    echo "Build did not generate a dist/ directory."
+    exit 1
+fi
+
+# Copy only necessary files to the build directory
+cp -r dist/ $LOCAL_BUILD_PATH/dist/
+cp ../.env $LOCAL_BUILD_PATH/
+cp ./.tool-versions $LOCAL_BUILD_PATH/
+cp package.json $LOCAL_BUILD_PATH/
+cp package-lock.json $LOCAL_BUILD_PATH/ # or yarn.lock if using Yarn
+
+# Step 3: Compress the build directory
+echo "Compressing the build directory..."
+tar -czf $ARCHIVE_NAME -C $LOCAL_BUILD_PATH .
+
+# Ensure the remote directory exists
+sshpass -p "$SSH_PASSWORD" ssh $SERVER_USER@$SERVER_IP "mkdir -p $DESTINATION_PATH"
+
+# Step 4: Transfer the archive to the remote server
+echo "Transferring archive to remote server..."
+sshpass -p "$SSH_PASSWORD" scp $ARCHIVE_NAME $SERVER_USER@$SERVER_IP:$DESTINATION_PATH
+
+# Step 5: Clean up local compressed file
+echo "Cleaning up local compressed file..."
+rm $ARCHIVE_NAME
+
+# Step 6: Run remote commands (like decompressing the archive)
+echo "Running remote commands..."
+sshpass -p "$SSH_PASSWORD" ssh $SERVER_USER@$SERVER_IP << EOF
+export PATH=\$PATH:/root/.asdf/bin:/root/.asdf/shims
+cd $DESTINATION_PATH
+tar -xzf $ARCHIVE_NAME
+rm $ARCHIVE_NAME
+asdf install
+npm install
+
+# Configure pm2 namespace
+pm2 unstartup
+pm2 delete all
+pm2 start ./dist --name "$APP_NAME"
+pm2 save
+pm2 startup
+
+
+EOF
+
+echo "Deployment completed successfully."

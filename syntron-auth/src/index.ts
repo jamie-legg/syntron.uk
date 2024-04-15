@@ -66,6 +66,10 @@ app.post('/login', async (req: Request, res: Response) => {
   }
 });
 
+app.get('/', (req: Request, res: Response) => {
+  res.json({ message: 'Welcome to the Syntron Authentication API' });
+});
+
 // Protected route example
 app.get('/protected', authenticateToken, (req: Request, res: Response) => {
   res.json({ message: 'Access granted to protected route' });
