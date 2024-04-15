@@ -1,10 +1,8 @@
 
 
-import Link from "next/link";
 import React, { useRef, useState, useEffect } from "react";
 
-export const DashboardTile = ({ href, children }: {
-    href: string;
+export const Card = ({ children }: {
     children: React.ReactNode;
 }) => {
   const clamp = (value: number, min: number, max: number) => {
@@ -89,12 +87,9 @@ export const DashboardTile = ({ href, children }: {
   const color = "red";
 
   return (
-    <Link href={href}>
     <div
-      ref={ref}
-      className={`bg-slate-900 to-indigo-500 h-32 w-48 rounded-lg shadow-lg relative overflow-hidden bg-opacity-85 text-sky-400 border-4 border-sky-400
-          hover:bg-sky-400 hover:bg-opacity-30 hover:text-sky-200 hover:border-sky-200 
-           transition-all duration-200 cursor-pointer
+      className={`bg-slate-900 to-indigo-500 h-full w-full rounded-lg shadow-lg relative overflow-hidden bg-opacity-85 text-sky-400 border-4 border-sky-400
+           transition-all duration-200
       `}
       style={{ transform: style.transform, textShadow: style.boxShadow }}
     >
@@ -105,6 +100,5 @@ export const DashboardTile = ({ href, children }: {
     {children}
     </div>
     </div>
-    </Link>
   );
 };
