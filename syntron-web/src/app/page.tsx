@@ -9,8 +9,11 @@ import { Text3D } from "@react-three/drei";
 import { Inter } from "next/font/google";
 import Aside from "./components/Aside";
 import { NavBar } from "./components/Navbar";
+import { usePathname, useRouter } from "next/navigation";
 
 const IndexPage: React.FC = () => {
+  const path = usePathname();
+  const router = useRouter();
   const tiles = [
     { color: "green", text: "How to Play", link: "/guide/play" },
     { color: "blue", text: "Get Good", link: "/guide/improve" },
@@ -22,6 +25,16 @@ const IndexPage: React.FC = () => {
     { color: "gray", text: "Download", link: "/download" },
     { color: "black", text: "Get a login", link: "/auth" },
   ];
+
+  // redirect /discord to https://discord.gg/3d
+
+  console.log('path:', path);
+  console.log('router:', router);
+  
+  
+  if (path === "/discord") {
+    window.location.href = "https://discord.gg/dcpaauj";
+  }
 
   return (
     <>

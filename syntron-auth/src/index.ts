@@ -14,6 +14,13 @@ const pool = new Pool({
   password: 'your_password',
   port: 5432,
 });
+// Middleware to log requests
+app.use((req: Request, res: Response, next: Function) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  console.log('Headers:', req.headers);
+  console.log('Body:', req.body);
+  next();
+});
 
 // User registration endpoint
 app.post('/register', async (req: Request, res: Response) => {
@@ -64,6 +71,32 @@ app.post('/login', async (req: Request, res: Response) => {
     console.error('Error logging in:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+app.get('/armaauth/0.1', async (req: Request, res: Response) => {
+  console.log('GET /armaauth/0.1')
+  const requestInfo = {
+    method: req.method,
+    url: req.url,
+    headers: req.headers,
+    body: req.body,
+  };
+
+  res.json(requestInfo);
+} );
+
+app.post('/armaauth/0.1', async (req: Request, res: Response) => {
+
+  console.log('POST /armaauth/0.1')
+  const requestInfo = {
+    method: req.method,
+    url: req.url,
+    headers: req.headers,
+    body: req.body,
+  };
+
+  res.json(requestInfo);
+
 });
 
 app.get('/', (req: Request, res: Response) => {
