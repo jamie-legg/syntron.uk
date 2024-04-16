@@ -67,7 +67,16 @@ app.post('/login', async (req: Request, res: Response) => {
 });
 
 app.get('/', (req: Request, res: Response) => {
-  res.json({ message: 'Welcome to the Syntron Authentication API' });
+  // get info from the request and show it in the response
+
+  const requestInfo = {
+    method: req.method,
+    url: req.url,
+    headers: req.headers,
+    body: req.body,
+  };
+
+  res.json(requestInfo);
 });
 
 // Protected route example
