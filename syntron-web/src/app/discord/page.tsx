@@ -6,6 +6,8 @@ import AnimatedGradient from "../components/AnimatedGradient";
 
 export default function DiscordPage() {
   const router = useRouter();
+
+  
   router.replace("https://discord.gg/dcpaauj");
   return (
     <div className="w-screen h-screen overflow-hidden">
