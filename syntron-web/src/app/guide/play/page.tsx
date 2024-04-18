@@ -1,10 +1,6 @@
-"use client";
-
+"use client";;
 import React from "react";
 import { Canvas } from "@react-three/fiber";
-import { TextGeometry } from "three/examples/jsm/Addons.js";
-import { Text3D } from "@react-three/drei";
-import { Inter } from "next/font/google";
 import { CameraControls } from "@/app/camera/CameraControls";
 import { Card } from "@/app/components/Card";
 import { HomeLink } from "@/app/components/HomeLink";
