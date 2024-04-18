@@ -26,16 +26,6 @@ const IndexPage: React.FC = () => {
     { color: "black", text: "Get a login", link: "/auth" },
   ];
 
-  // redirect /discord to https://discord.gg/3d
-
-  console.log('path:', path);
-  console.log('router:', router);
-  
-  
-  if (path === "/discord") {
-    window.location.href = "https://discord.gg/dcpaauj";
-  }
-
   return (
     <>
       <div className="z-10 absolute top-0">
