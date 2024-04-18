@@ -1,19 +1,24 @@
-"use client";
+'use client'
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { ArrowPathIcon } from '@heroicons/react/24/outline';
+import AnimatedGradient from '../components/AnimatedGradient';
 
-import { ArrowPathIcon } from "@heroicons/react/24/outline";
-import { useRouter } from "next/navigation";
-import AnimatedGradient from "../components/AnimatedGradient";
-
-export default function DiscordPage() {
+const DiscordPage: React.FC = () => {
   const router = useRouter();
 
-  
-  router.replace("https://discord.gg/dcpaauj");
+  useEffect(() => {
+
+    router.replace('https://discord.gg/dcpaauj');
+  }, [router]);  
+
   return (
     <div className="w-screen h-screen overflow-hidden">
-      <AnimatedGradient >
+      <AnimatedGradient>
         <ArrowPathIcon className="h-24 w-24 text-sky-900 animate-spin -mt-8" />
       </AnimatedGradient>
     </div>
   );
-}
+};
+
+export default DiscordPage;
