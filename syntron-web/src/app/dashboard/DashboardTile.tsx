@@ -4,10 +4,12 @@ import React, { useRef, useState, useEffect } from "react";
 export const DashboardTile = ({
   active,
   href,
+  icon,
   children,
 }: {
   active: boolean;
   href: string;
+  icon: React.ReactNode;
   children: React.ReactNode;
 }) => {
   const clamp = (value: number, min: number, max: number) => {
@@ -68,6 +70,9 @@ export const DashboardTile = ({
         <div
           className="flex justify-start place-content-center items-center font-bold text-sm uppercase "
         >
+        <span className="mr-2 w-4 text-sky-100 rounded-xl">
+        {icon}
+        </span>
           {children}
         </div>
       </div>

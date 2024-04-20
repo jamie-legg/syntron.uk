@@ -50,7 +50,7 @@ const LeaderboardsPage: React.FC = () => {
   return (
     <>
       <Navigation>
-              <div className="fixed inset-y-0 z-0 flex flex-col mt-12">
+              <div className="fixed inset-y-0 z-0 flex flex-col mt-16">
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-black/10 px-6 ring-1 ring-white/5">
               <ul role="list" className="grid grid-cols-3">
 
