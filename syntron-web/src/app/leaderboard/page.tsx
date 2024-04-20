@@ -9,6 +9,31 @@ import api, { getRanks } from "@/services/api";
 import { TRanking } from "@/types/TApi";
 import RankCard from "../components/RankCard";
 
+const GridSkeleton = () => {
+  return (
+    <>
+      {[1, 2, 3, 4, 5, 6,7,8,9].map((index) => (
+        <div className="m-2" key={index}>
+  <div
+  className="rounded-lg border border-sky-900 animate-pulse text-card-foreground shadow-sm w-96 max-w-md p-6 grid gap-4 relative"
+  data-v0-t="card"
+>
+  <div className="flex flex-col w-full">
+    <div className="h-4 w-full border border-sky-900 mt-6 rounded"></div>
+    <div className="h-4 w-full border border-sky-900 mt-6 rounded"></div>
+    <div className="h-4 w-full border border-sky-900 mt-6 rounded"></div>
+    <div className="h-4 w-full border border-sky-900 mt-6 rounded"></div>
+    <div className="h-4 w-full border border-sky-900 mt-6 rounded"></div>
+
+    </div>
+
+        </div>
+        </div>
+      ))}
+    </>
+  );
+}
+
 const LeaderboardsPage: React.FC = () => {
   const [loading, setLoading] = React.useState<boolean>(true);
   const [ranks, setRanks] = React.useState<TRanking[]>([]);
@@ -21,18 +46,19 @@ const LeaderboardsPage: React.FC = () => {
     });
   });
 
+
   return (
     <>
       <Navigation>
-              <div className="fixed inset-y-0 z-0 flex flex-col">
+              <div className="fixed inset-y-0 z-0 flex flex-col mt-12">
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-black/10 px-6 ring-1 ring-white/5">
-              <ul role="list" className="grid grid-cols-3 space-x-2 space-y-2">
+              <ul role="list" className="grid grid-cols-3">
 
             {loading ? (
-              <div>Loading...</div>
+              <GridSkeleton />
               ) : (
                 ranks.map((rank, index) => (
-                <li key={index}>
+                <li className="m-2" key={index}>
                   <RankCard key={index} playerRank={rank} />
                 </li>
 

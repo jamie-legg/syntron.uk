@@ -32,7 +32,7 @@ export default function Navigation({
     <div className="z-10 fixed top-0 w-screen h-screen p-8">
       <div className="flex justify-center items-center h-full">
         <div className="w-full rounded-lg shadow-lg h-full relative bg-opacity-50 text-sky-400 border border-sky-400 border-opacity-30 backdrop-filter backdrop-blur-sm pr-5 transition-all duration-200">
-          <div className="mt-2 pl-5 z-50 block">
+          <div className="mb-12 z-50 block">
             <NavBar title={getRouteNameFromPath()} />
           </div>
           <div className="flex">  {/* Adjust height as necessary */}
@@ -47,7 +47,7 @@ export default function Navigation({
                 </DashboardTile>
               ))}
             </div>
-            <div className="w-284 overflow-y-auto mt-16">
+            <div className="w-284 overflow-y-auto">
   {children}
             </div>
           </div>

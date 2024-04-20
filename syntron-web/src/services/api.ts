@@ -11,6 +11,10 @@ export const getUsers = () => {
     return api.get('/users');
 };
 
+export const getServers = async () => {
+    return await api.get('/servers');
+}
+
 export const createUser = (userData: TCreateUserRequest) => {
     return api.post('/users', userData);
 };

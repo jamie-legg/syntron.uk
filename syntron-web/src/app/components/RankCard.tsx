@@ -45,7 +45,7 @@ export default function RankCard({playerRank}: {playerRank: TRanking}) {
         <div className="text-sm">{avgScore} Avg. Score</div>
         <div className="text-sm text-right">{highScore} Highest Score</div>
         <div className="text-sm">{kd} K/D Ratio</div>
-        <div className="text-sm text-right">Last Seen: {lastSeen}</div>
+        <div className="text-xs text-right">Last Seen: {lastSeen}</div>
       </div>
     </div>
   )

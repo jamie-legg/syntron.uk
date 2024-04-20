@@ -12,8 +12,29 @@ import { NavBar } from "./components/Navbar";
 import { usePathname, useRouter } from "next/navigation";
 import Navigation from "./components/Navigation";
 import { NEWS_TEXT, SUGGESTION_TEXT, WELCOME_TEXT, NEWS_BANNER, WELCOME_BANNER } from "./consts";
+import { TServerInfo, TServersMetadata } from "@/types/TApi";
+import {getServers} from "@/services/api";
 
 const IndexPage: React.FC = () => {
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+  const [serversData, setServersData] = React.useState<TServerInfo[]>([]);
+  const [serversInfo, setServersMetadata] = React.useState<TServersMetadata[]>([]);
+
+  React.useEffect(() => {
+    if (serversData.length > 0) return;
+      getServers()
+      .then((response) => {
+        setServersMetadata(response.data.metadata);
+        setServersData(response.data.servers);
+        setLoading(false);
+      })
+      .catch((e) => {
+        setError(e.message);
+        setLoading(false);
+      });
+  });
+
   const path = usePathname();
   const router = useRouter();
   const tiles = [
@@ -28,6 +49,7 @@ const IndexPage: React.FC = () => {
     { color: "black", text: "Get a login", link: "/auth" },
   ];
 
+
   return (
     <>
       <Navigation>
@@ -39,7 +61,16 @@ const IndexPage: React.FC = () => {
             <div className="w-96 border-sky-500 border-y">
             {NEWS_BANNER}
             {NEWS_TEXT}</div>
-            <div className="w-96 border-sky-500 border-y">3</div>
+            <div className="w-96 border-sky-500 border-y">
+            {serversData.map((server, index) => (
+              <div key={index}>
+                <p>{server.server_name}</p>
+                <p>{server.options}</p>
+                <p>{server.num_players}/{server.max_players}</p>
+                <p>{server.players.join(" ")}</p>
+            </div>
+            ))}
+            </div>
           </div>
           <div className="flex w-full">
             <div className="border-2 border-sky-500 rounded-lg w-full">4</div>

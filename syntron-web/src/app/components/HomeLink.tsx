@@ -6,7 +6,7 @@ export const HomeLink = ({ page }: { page: string }) => {
   const [authOpen, setAuthOpen] = useState(false);
   return (
     <>
-      <div className="bg-opacity-80 w-full h-max flex justify-between items-center tracking-widest uppercase">
+      <div className="border-b border-sky-500 w-full h-max fixed inset-y-0 flex z-50 justify-between items-center tracking-widest uppercase backdrop-filter bg-black">
         <Link href="/">
           <div className="flex sapce-x-2">
             <h1 className="text-sky-500 tracking-tighter text-xl font-bold">
