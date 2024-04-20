@@ -16,6 +16,9 @@ const config: Config = {
       animation: {
         "gradient-x": "gradientX 8s ease infinite",
       },
+      width: {
+        284: "72rem",
+      },
     },
   },
   plugins: [],

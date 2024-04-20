@@ -51,29 +51,6 @@ export const DashboardTile = ({
       transform: "",
     });
 
-    useEffect(() => {
-      const handleMouseMove = (event: MouseEvent) => {
-        if (ref.current) {
-          const rect = ref.current.getBoundingClientRect();
-          const newTransform = calculateRotation(
-            rect,
-            event.clientX,
-            event.clientY
-          );
-          const newShadow = calculateShadow(rect, event.clientX, event.clientY);
-          setStyle({
-            transform: newTransform,
-          });
-        }
-      };
-
-      window.addEventListener("mousemove", handleMouseMove);
-
-      return () => {
-        window.removeEventListener("mousemove", handleMouseMove);
-      };
-    }, [ref]);
-
     return style;
   };
   const ref = useRef<HTMLDivElement>(null);

@@ -1,3 +1,5 @@
+import { AxiosResponse } from "axios";
+
 export type TCreateUserRequest = {
   name: string;
   email: string;
@@ -15,4 +17,18 @@ export type TGetUsersResponse = {
   }[];
 };
 
-// Path: syntron-web/src/types/TApi.ts
+export type TGetRanksResponse = AxiosResponse<TRanking[]>;
+
+export type TRanking = {
+  rank: string;
+  name: string;
+  elo: string;
+  latestChange: string;
+  winrate: string;
+  avgPlace: string;
+  netPoints: string;
+  avgScore: string;
+  highScore: string;
+  kd: string;
+  lastSeen: string;
+};

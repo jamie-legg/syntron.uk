@@ -1,21 +1,10 @@
+import { TRanking } from "@/types/TApi";
 import axios from "axios";
 
-type Ranking = {
-  rank: string;
-  name: string;
-  elo: string;
-  latestChange: string;
-  changeDate: string;
-  winrate: string;
-  avgPlace: string;
-  netPoints: string;
-  avgScore: string;
-  highScore: string;
-  kd: string;
-};
+
 
 function parseRankings(htmlContent: string): object[] {
-  const rankings: Ranking[] = [];
+  const rankings: TRanking[] = [];
   const headers = [
     "rank",
     "name",
@@ -53,7 +42,7 @@ function parseRankings(htmlContent: string): object[] {
         rowObject[header] = cells[i];
       });
 
-      rankings.push(rowObject as Ranking);
+      rankings.push(rowObject as TRanking);
     }
   }
 

@@ -9,7 +9,7 @@ const routes = [
   { color: "green", text: "How to Play", link: "/guide/play" },
   { color: "blue", text: "Get Good", link: "/guide/improve" },
   { color: "yellow", text: "Aesthetics", link: "/guide/aesthetics" },
-  { color: "pink", text: "Hall of Fame", link: "/leaderboard" },
+  { color: "pink", text: "Leaderboard", link: "/leaderboard" },
   { color: "red", text: "Community", link: "/community" },
   { color: "purple", text: "Creators", link: "/creators" },
   { color: "indigo", text: "Resources", link: "/tools" },
@@ -25,36 +25,30 @@ export default function Navigation({
 
   const getRouteNameFromPath = () => {
     if (path === "/") return "Home";
-    return routes.filter((route) => route.link.includes(path))[0].text;
+    return routes.find((route) => path.includes(route.link))?.text ?? "Not Found";
   };
 
   return (
-    <div className="z-10 absolute top-0">
-      <div className="h-screen w-screen overflow-hidden">
-        <div className="flex w-full justify-center h-full items-center">
-          <div
-            className={`h-max w-max rounded-lg shadow-lg mx-8
-               relative overflow-hidden bg-opacity-50 text-sky-400 border border-sky-400 border-opacity-30
-               backdrop-filter backdrop-blur-sm pr-5
-              transition-all duration-200
-      `}
-          >
-            <div className="mt-2 pl-5">
-              <NavBar title={getRouteNameFromPath()} />
+    <div className="z-10 fixed top-0 w-screen h-screen p-8">
+      <div className="flex justify-center items-center h-full">
+        <div className="w-full rounded-lg shadow-lg h-full relative bg-opacity-50 text-sky-400 border border-sky-400 border-opacity-30 backdrop-filter backdrop-blur-sm pr-5 transition-all duration-200">
+          <div className="mt-2 pl-5 z-50 block">
+            <NavBar title={getRouteNameFromPath()} />
+          </div>
+          <div className="flex">  {/* Adjust height as necessary */}
+            <div className="flex flex-col w-48 gap-y-2 my-2 overflow-y-auto">
+              {routes.map((route) => (
+                <DashboardTile
+                  active={path === route.link}
+                  href={route.link}
+                  key={route.text}
+                >
+                  {route.text}
+                </DashboardTile>
+              ))}
             </div>
-            <div className="flex">
-              <div className="flex flex-col w-48 gap-y-2 my-2">
-                {routes.map((route) => (
-                  <DashboardTile
-                    active={path === route.link}
-                    href={route.link}
-                    key={route.text}
-                  >
-                    {route.text}
-                  </DashboardTile>
-                ))}
-              </div>
-              {children}
+            <div className="w-284 overflow-y-auto mt-16">
+  {children}
             </div>
           </div>
         </div>

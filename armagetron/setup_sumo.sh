@@ -21,6 +21,7 @@ TALK_TO_MASTER 1
 GLOBAL_ID 1
 SP_TEAM_MAX_PLAYERS 1
 USER_LEVEL rxsyn@forums 0
+USER_LEVEL Pre@forums 1
 EOL
 
 # Create script.txt
