@@ -9,7 +9,6 @@ export const CameraControls = () => {
   const camera = useRef<any>();
   const plane = useRef<any>();
 
-  const light = useRef<any>();
   const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({
     x: 0,
     y: 0,
@@ -43,14 +42,6 @@ export const CameraControls = () => {
     }
   });
 
-  const gradientColorRepresentation = (
-    start: string,
-    end: string
-  ): ColorRepresentation => {
-    const color = new Color(start);
-    return color.lerpColors(new Color(start), new Color(end), 1);
-  };
-
   return (
     <>
       <PerspectiveCamera ref={camera} position={[0, 0, 5]} />
@@ -59,6 +50,8 @@ export const CameraControls = () => {
         ref={plane}
         sectionThickness={2}
         infiniteGrid
+
+        cellColor={'#00ffff'}
         fadeDistance={100}
         fadeStrength={10}
       />

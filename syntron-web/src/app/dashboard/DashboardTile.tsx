@@ -1,24 +1,25 @@
-
-
 import Link from "next/link";
 import React, { useRef, useState, useEffect } from "react";
 
-export const DashboardTile = ({ href, children }: {
-    href: string;
-    children: React.ReactNode;
+export const DashboardTile = ({
+  active,
+  href,
+  children,
+}: {
+  active: boolean;
+  href: string;
+  children: React.ReactNode;
 }) => {
   const clamp = (value: number, min: number, max: number) => {
     return Math.min(Math.max(value, min), max);
   };
 
-  // Function to calculate rotation based on mouse position, with max rotation limits
   const calculateRotation = (
     rect: DOMRect,
     mouseX: number,
     mouseY: number,
     maxAngle: number = 15
   ) => {
-    // Reverse the direction of rotation by switching the sign of the calculated rotation
     const xRot = clamp(
       -2 * ((mouseY - (rect.top + rect.height / 2)) / rect.height),
       -maxAngle,
@@ -32,26 +33,22 @@ export const DashboardTile = ({ href, children }: {
     return `perspective(500px) rotateX(${xRot}deg) rotateY(${yRot}deg)`;
   };
 
-  // Function to calculate shadow based on mouse position
   const calculateShadow = (
     rect: DOMRect,
     mouseX: number,
     mouseY: number,
     maxOffset: number = 10
   ) => {
-    const xOffset =(
-      maxOffset * ((mouseX - (rect.left + rect.width / 2)) / rect.width)
-    );
-    const yOffset = (
-      maxOffset * ((mouseY - (rect.top + rect.height / 2)) / rect.height)
-    );
+    const xOffset =
+      maxOffset * ((mouseX - (rect.left + rect.width / 2)) / rect.width);
+    const yOffset =
+      maxOffset * ((mouseY - (rect.top + rect.height / 2)) / rect.height);
     return `${xOffset}px ${yOffset}px 15px rgba(0, 0, 0, 0.1)`;
   };
 
   const useMousePositionEffect = (ref: React.RefObject<HTMLDivElement>) => {
-    const [style, setStyle] = useState<{ transform: string, boxShadow: string }>({
-      transform: '',
-      boxShadow: ''
+    const [style, setStyle] = useState<{ transform: string }>({
+      transform: "",
     });
 
     useEffect(() => {
@@ -63,14 +60,9 @@ export const DashboardTile = ({ href, children }: {
             event.clientX,
             event.clientY
           );
-          const newShadow = calculateShadow(
-            rect,
-            event.clientX,
-            event.clientY
-          );
+          const newShadow = calculateShadow(rect, event.clientX, event.clientY);
           setStyle({
             transform: newTransform,
-            boxShadow: newShadow
           });
         }
       };
@@ -86,25 +78,22 @@ export const DashboardTile = ({ href, children }: {
   };
   const ref = useRef<HTMLDivElement>(null);
   const style = useMousePositionEffect(ref);
-  const color = "red";
 
   return (
     <Link href={href}>
-    <div
-      ref={ref}
-      className={`bg-slate-900 to-indigo-500 h-32 w-48 rounded-lg shadow-lg relative overflow-hidden bg-opacity-85 text-sky-400 border-4 border-sky-400
-          hover:bg-sky-400 hover:bg-opacity-30 hover:text-sky-200 hover:border-sky-200 
-           transition-all duration-200 cursor-pointer
+      <div
+        className={`${active? 'text-sky-200 border-sky-200 border-opacity-100' : 'text-sky-500 border-sky-400 border-opacity-40'} shadow-lg relative overflow-hidden bg-opacity-30 border-b 
+   hover:text-sky-200 hover:border-sky-200 
+           transition-all duration-200 cursor-pointer w-full px-4 py-2 border-svg tracking-widest
       `}
-      style={{ transform: style.transform, textShadow: style.boxShadow }}
-    >
-    <div className="w-full h-full flex justify-center place-content-center items-center font-bold 
-
-    text-xl
-    ">
-    {children}
-    </div>
-    </div>
+        style={{ transform: style.transform }}
+      >
+        <div
+          className="flex justify-start place-content-center items-center font-bold text-sm uppercase "
+        >
+          {children}
+        </div>
+      </div>
     </Link>
   );
 };

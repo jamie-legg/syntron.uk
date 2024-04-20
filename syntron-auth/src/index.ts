@@ -181,6 +181,6 @@ function authenticateToken(req: Request, res: Response, next: Function) {
 }
 
 // Start the server
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+app.listen(3300, () => {
+  console.log("Server is running on port 3300");
 });

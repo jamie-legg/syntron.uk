@@ -1,13 +1,23 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
+import AuthForm from './AuthForm'
 
-export default function Aside() {
-  const [open, setOpen] = useState(true)
+export default function Aside({ isOpen, onClose }: { isOpen: boolean, onClose: () => void}) {
+  const [open, setOpen] = useState(isOpen)
+
+  useEffect(() => {
+    setOpen(isOpen)
+  }, [isOpen])
+
+  const closeHandler = () => {
+    setOpen(false)
+    onClose()
+  }
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+      <Dialog as="div" className="relative z-10" onClose={closeHandler}>
         <div className="fixed inset-0" />
 
         <div className="fixed inset-0 overflow-hidden">
@@ -23,7 +33,7 @@ export default function Aside() {
                 leaveTo="translate-x-full"
               >
                 <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                  <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
+                  <div className="flex h-full flex-col overflow-y-scroll backdrop-filter backdrop-blur-xl border-l border-y border-sky-500 rounded-y-xl rounded-l-xl py-6 shadow-xl">
                     <div className="px-4 sm:px-6">
                       <div className="flex items-start justify-between">
                         <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
@@ -32,8 +42,8 @@ export default function Aside() {
                         <div className="ml-3 flex h-7 items-center">
                           <button
                             type="button"
-                            className="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                            onClick={() => setOpen(false)}
+                            className="relative rounded-md text-sky-400 hover:text-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
+                            onClick={closeHandler}
                           >
                             <span className="absolute -inset-2.5" />
                             <span className="sr-only">Close panel</span>
@@ -42,7 +52,10 @@ export default function Aside() {
                         </div>
                       </div>
                     </div>
-                    <div className="relative mt-6 flex-1 px-4 sm:px-6">{/* Your content */}</div>
+                    <div className="relative mt-6 flex-1 px-4 sm:px-6">
+                    <AuthForm />
+                    
+                    </div>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
