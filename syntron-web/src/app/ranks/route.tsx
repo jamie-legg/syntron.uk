@@ -55,7 +55,7 @@ function parseRankings(htmlContent: string): object[] {
 
   rankings.shift();
 
-  return rankings;
+  return rankings.slice(0, 100);
 }
 export async function GET(request: Request) {
   try {

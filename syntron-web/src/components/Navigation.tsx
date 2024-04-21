@@ -20,7 +20,6 @@ import { DashboardTile } from "@/app/dashboard/DashboardTile";
 
 const routes = [
   {
-    color: "gray",
     text: "Download",
     link: "/download",
     icon: <ArrowDownTrayIcon />,
@@ -45,7 +44,7 @@ const routes = [
   },
   {
     color: "pink",
-    text: "Leaderboard",
+    text: "Top 100",
     link: "/leaderboard",
     icon: <TrophyIcon />,
   },
