@@ -1,3 +1,4 @@
+import { nocache } from '@/lib/utils';
 import { TCreateUserRequest, TGetRanksResponse, TRanking } from '@/types/TApi';
 import axios from 'axios';
 
@@ -11,12 +12,10 @@ export const getUsers = () => {
     return api.get('/users');
 };
 
+
+
 export const getServers = async () => {
-    return await api.get('/servers', {
-        params: {
-            timestamp: Date.now(),
-        },
-    });
+    return await api.get('/servers', nocache());
 }
 
 export const createUser = (userData: TCreateUserRequest) => {

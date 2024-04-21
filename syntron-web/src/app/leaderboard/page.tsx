@@ -2,12 +2,12 @@
 import React, { useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { CameraControls } from "@/app/camera/CameraControls";
-import { Card } from "@/app/components/Card";
-import { HomeLink } from "@/app/components/HomeLink";
-import Navigation from "@/app/components/Navigation";
+import { Card } from "@/components/Card";
+import { HomeLink } from "@/components/HomeLink";
+import Navigation from "@/components/Navigation";
 import api, { getRanks } from "@/services/api";
 import { TRanking } from "@/types/TApi";
-import RankCard from "../components/RankCard";
+import RankCard from "@/components/RankCard";
 
 const GridSkeleton = () => {
   return (

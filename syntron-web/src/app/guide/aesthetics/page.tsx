@@ -2,9 +2,9 @@
 import React from "react";
 import { Canvas } from "@react-three/fiber";
 import { CameraControls } from "@/app/camera/CameraControls";
-import { Card } from "@/app/components/Card";
-import { HomeLink } from "@/app/components/HomeLink";
-import Navigation from "@/app/components/Navigation";
+import { Card } from "@/components/Card";
+import { HomeLink } from "@/components/HomeLink";
+import Navigation from "@/components/Navigation";
 
 const AestheticsPage: React.FC = () => {
   return (

@@ -1,4 +1,4 @@
-export const WELCOME_BANNER = `Welcome!`
+export const WELCOME_BANNER = `Welcome`
 
 export const WELCOME_TEXT = `
 Welcome to Syntron.uk, a hub for all your armagetronad/retroycycles requirements. 

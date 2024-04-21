@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
-import AnimatedGradient from '../components/AnimatedGradient';
+import AnimatedGradient from '.@/components/AnimatedGradient';
 
 const DiscordPage: React.FC = () => {
   const router = useRouter();
