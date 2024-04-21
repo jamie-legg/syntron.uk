@@ -12,68 +12,27 @@ export const DashboardTile = ({
   icon: React.ReactNode;
   children: React.ReactNode;
 }) => {
-  const clamp = (value: number, min: number, max: number) => {
-    return Math.min(Math.max(value, min), max);
-  };
-
-  const calculateRotation = (
-    rect: DOMRect,
-    mouseX: number,
-    mouseY: number,
-    maxAngle: number = 15
-  ) => {
-    const xRot = clamp(
-      -2 * ((mouseY - (rect.top + rect.height / 2)) / rect.height),
-      -maxAngle,
-      maxAngle
-    );
-    const yRot = clamp(
-      2 * ((mouseX - (rect.left + rect.width / 2)) / rect.width),
-      -maxAngle,
-      maxAngle
-    );
-    return `perspective(500px) rotateX(${xRot}deg) rotateY(${yRot}deg)`;
-  };
-
-  const calculateShadow = (
-    rect: DOMRect,
-    mouseX: number,
-    mouseY: number,
-    maxOffset: number = 10
-  ) => {
-    const xOffset =
-      maxOffset * ((mouseX - (rect.left + rect.width / 2)) / rect.width);
-    const yOffset =
-      maxOffset * ((mouseY - (rect.top + rect.height / 2)) / rect.height);
-    return `${xOffset}px ${yOffset}px 15px rgba(0, 0, 0, 0.1)`;
-  };
-
-  const useMousePositionEffect = (ref: React.RefObject<HTMLDivElement>) => {
-    const [style, setStyle] = useState<{ transform: string }>({
-      transform: "",
-    });
-
-    return style;
-  };
-  const ref = useRef<HTMLDivElement>(null);
-  const style = useMousePositionEffect(ref);
 
   return (
     <Link href={href}>
       <div
-        className={`${active? 'text-sky-200 border-sky-200 border-opacity-100' : 'text-sky-500 border-sky-400 border-opacity-40'} shadow-lg relative overflow-hidden bg-opacity-30 border-b 
-   hover:text-sky-200 hover:border-sky-200 
-           transition-all duration-200 cursor-pointer w-full px-4 py-2 border-svg tracking-widest
+        className={`${
+          active
+            ? "text-pink-200 border-sky-200 border-opacity-100 bg-sky-700 rounded-tr-lg"
+            : "text-pink-500 border-sky-400 border-opacity-40"
+        } shadow-lg relative overflow-hidden bg-opacity-30 border-b 
+   hover:text-pink-200 hover:border-pink-200 
+           transition-all duration-200 cursor-pointer w-full px-4 py-2 border-svg tracking-widest group
       `}
-        style={{ transform: style.transform }}
       >
-        <div
-          className="flex justify-start place-content-center items-center font-bold text-sm uppercase "
-        >
-        <span className="mr-2 w-4 text-sky-100 rounded-xl">
-        {icon}
-        </span>
+        <div className="flex justify-between w-full place-content-center items-center text-sm ">
+        <div>
+          <p>
           {children}
+          </p>
+        </div>
+          <span className="mr-2 w-6 text-sky-500 group-hover:w-8 rounded-xl transition-all">{icon}</span>
+
         </div>
       </div>
     </Link>

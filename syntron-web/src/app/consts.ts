@@ -10,5 +10,4 @@ Make a suggestion to improve this site!`
 export const NEWS_BANNER = 'News'
 
 export const NEWS_TEXT = `
-The authentication server is live! Using this site, you can track your in-game statistics, link your ID to your discord account, and your retrocycles account.
-`
+The site is currently under construction. While we are working on it, please feel free to make suggestions for improvements. When the site is ready, we will be hosting a tournament with a prize pool of £100. Stay tuned for more information!`

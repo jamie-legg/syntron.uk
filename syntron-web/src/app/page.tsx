@@ -14,6 +14,7 @@ import {
 import { TServerInfo, TServersMetadata } from "@/types/TApi";
 import { getServers } from "@/services/api";
 import { ServerCard } from "@/components/ServerCard";
+import Section from "@/components/Section";
 
 const IndexPage: React.FC = () => {
   const [loading, setLoading] = React.useState(true);
@@ -39,62 +40,32 @@ const IndexPage: React.FC = () => {
       });
   });
 
-  const path = usePathname();
-  const router = useRouter();
-  const tiles = [
-    { color: "gray", text: "Download", link: "/download" },
-    { color: "green", text: "How to Play", link: "/guide/play" },
-    { color: "blue", text: "Get Good", link: "/guide/improve" },
-    { color: "yellow", text: "Aesthetics", link: "/guide/aesthetics" },
-    { color: "pink", text: "Hall of Fame", link: "/leaderboard" },
-    { color: "red", text: "Community", link: "/community" },
-    { color: "purple", text: "Creators", link: "/creators" },
-    { color: "indigo", text: "Resources", link: "/tools" },
-    { color: "black", text: "Get a login", link: "/auth" },
-  ];
-
   return (
     <>
       <Navigation>
         <div className="flex-col w-full">
           <div className="flex w-full justify-between my-2">
-            <div>
-              <h1 className="uppercase font-extrabold text-lg">{WELCOME_BANNER}</h1>
-              <div className="w-48 border-sky-500 border-t">
-              <div className="pt-2">
-              
-                {WELCOME_TEXT}
+            <Section
+              title="Welcome"
+              sections={[WELCOME_TEXT, SUGGESTION_TEXT]}
+            />
+            <Section title="News" sections={[NEWS_TEXT]} />
+            <Section
+              title="Status"
+              sections={[`${serversMetadata?.players_online} players online`]}
+            >
+              <div className="fixed inset-y-16 z-0 flex flex-col mt-16">
+                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-black/10 ring-1 ring-white/5">
+                  {loading ? "Loading..." : error ? "Error" : ""}
+                  <p className="font-bold"></p>
+                  {serversData.map((server, index) => (
+                    <div key={index}>
+                      <ServerCard server={server} />
+                    </div>
+                  ))}
+                </div>
               </div>
-                <div className="my-2 border-b border-sky-800">
-                </div>
-                                <div className="pb-2 border-b border-sky-800">
-                {SUGGESTION_TEXT}
-
-                </div>
-              </div>
-            </div>
-            <div>
-            <h1>
-                          {NEWS_BANNER}
-            </h1>
-                        <div className="w-96 border-sky-500 border-y">
-
-              {NEWS_TEXT}
-            </div>
-            </div>
-
-
-            <div className="w-96 border-sky-500 border-y">
-              {loading ? "Loading..." : error ? "Error" : ""}
-              <p className="font-bold">
-                {serversMetadata?.players_online} players online
-              </p>
-              {serversData.map((server, index) => (
-                <div key={index}>
-                  <ServerCard server={server} />
-                </div>
-              ))}
-            </div>
+            </Section>
           </div>
         </div>
       </Navigation>

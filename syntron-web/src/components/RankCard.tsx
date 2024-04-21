@@ -22,10 +22,10 @@ export default function RankCard({playerRank}: {playerRank: TRanking}) {
 >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="bg-primary text-white font-semibold rounded-md px-2 py-1">#{rank}</div>
-          <h3 className="text-lg font-semibold">{name}</h3>
+          <div className="bg-primary text-pink-500 rounded-full border border-pink-400 font-semibold px-2 py-1">#{rank}</div>
+          <h3 className="text-lg font-semibold border-b border-pink-500">{name}</h3>
         </div>
-        <div className="bg-gray-100 rounded-md px-2 py-1 text-sm dark:bg-gray-800">{elo} ELO</div>
+        <div className="rounded-md px-2 py-1 font-bold dark:bg-pink-800 text-sky-400">{elo}</div>
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="flex items-center gap-2">
@@ -40,7 +40,7 @@ export default function RankCard({playerRank}: {playerRank: TRanking}) {
           <span className="text-sm">{latestChange} ELO</span>
         </div>
         <div className="text-sm text-right">{winrate}% Winrate</div>
-        <div className="text-sm">{avgPlace} Avg. Place</div>
+        <div className="text-sm">Avg. Place {avgPlace}</div>
         <div className="text-sm text-right">{netPoints} Net Points</div>
         <div className="text-sm">{avgScore} Avg. Score</div>
         <div className="text-sm text-right">{highScore} Highest Score</div>
