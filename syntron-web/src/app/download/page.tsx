@@ -12,10 +12,10 @@ const DownloadPage: React.FC = () => {
       <Navigation>
         <div className="flex-col w-full">
           <div className="flex w-full justify-between m-2">
-            <div className="w-96 border-sky-500 border-y">1</div>
+            <div className="w-96 border-sky-500 border-y">Steam</div>
             <div className="w-96 border-sky-500 border-y">
   
-  2</div>
+  Direct Download</div>
             <div className="w-96 border-sky-500 border-y">3</div>
           </div>
           <div className="flex w-full">

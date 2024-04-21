@@ -11,16 +11,11 @@ const CommunityPage: React.FC = () => {
     <>
       <Navigation>
         <div className="flex-col w-full">
-          <div className="flex w-full justify-between m-2">
-            <div className="w-96 border-sky-500 border-y">1</div>
-            <div className="w-96 border-sky-500 border-y">
+          <div className="flex w-full justify-around m-2">
+            <div className="w-96 border-sky-500 border-y flex justify-center">Forums</div>
+            <div className="w-96 border-sky-500 border-y flex justify-center">
   
-  2</div>
-            <div className="w-96 border-sky-500 border-y">3</div>
-          </div>
-          <div className="flex w-full">
-            <div className="border-2 border-sky-500 rounded-lg w-full">4</div>
-            <div className="border-2 border-sky-500 rounded-lg w-full">5</div>
+  Discord</div>
           </div>
         </div>
       </Navigation>

@@ -12,7 +12,11 @@ export const getUsers = () => {
 };
 
 export const getServers = async () => {
-    return await api.get('/servers');
+    return await api.get('/servers', {
+        params: {
+            timestamp: Date.now(),
+        },
+    });
 }
 
 export const createUser = (userData: TCreateUserRequest) => {

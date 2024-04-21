@@ -32,7 +32,7 @@ export default function Navigation({
   return (
     <div className="z-10 fixed top-0 w-screen h-screen p-8">
       <div className="flex justify-center items-center h-full">
-        <div className="w-full rounded-lg shadow-lg h-full relative bg-opacity-50 text-sky-400 border border-sky-400 border-opacity-30 backdrop-filter backdrop-blur-sm pr-5 transition-all duration-200">
+        <div className="w-full rounded-lg shadow-lg h-full relative text-sky-400 border border-sky-400 border-opacity-30 backdrop-filter backdrop-blur-xl pr-5 transition-all duration-200">
           <div className="mb-16 z-50 block">
             <NavBar title={getRouteNameFromPath()} />
           </div>

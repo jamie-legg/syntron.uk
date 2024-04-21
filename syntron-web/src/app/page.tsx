@@ -19,14 +19,15 @@ const IndexPage: React.FC = () => {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
   const [serversData, setServersData] = React.useState<TServerInfo[]>([]);
-  const [serversInfo, setServersMetadata] = React.useState<TServersMetadata[]>([]);
+  const [serversMetadata, setServersMetadata] = React.useState<TServersMetadata>();
 
   React.useEffect(() => {
     if (serversData.length > 0) return;
       getServers()
       .then((response) => {
+        const servers = response.data.servers as TServerInfo[];
         setServersMetadata(response.data.metadata);
-        setServersData(response.data.servers);
+        setServersData(servers.filter((server) => server.num_players > 0) as TServerInfo[]);
         setLoading(false);
       })
       .catch((e) => {
@@ -62,6 +63,10 @@ const IndexPage: React.FC = () => {
             {NEWS_BANNER}
             {NEWS_TEXT}</div>
             <div className="w-96 border-sky-500 border-y">
+            {loading ? "Loading..." : error ? "Error" : "Game Status"}
+            <p>
+            {serversMetadata?.players_online} players online
+            </p>
             {serversData.map((server, index) => (
               <div key={index}>
                 <p>{server.server_name}</p>
