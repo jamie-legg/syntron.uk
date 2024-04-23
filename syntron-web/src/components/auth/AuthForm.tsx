@@ -1,16 +1,19 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 
-import Tabs from "./Tabs";
-const tabs = [
-  { name: "Sign Up", href: "#", current: false },
-  { name: "Login", href: "#", current: false },
+import Tabs from "../Tabs";
+import { ReactNode, useState } from "react";
+import { TTabs } from "./TAuthTypes";
+
+const initialTabs = [
+  { id: "login", name: "Login", content: <div></div>, current: true },
+  { id: "register", name: "Sign Up", content: <div></div>, current: false },
 ];
 export default function AuthForm() {
+  const [tabs, setTabs] = useState<TTabs[]>(initialTabs);
   return (
     <>
       <Tabs tabs={tabs} />
       <div className="flex min-h-full flex-1 flex-col justify-start mt-6 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md"></div>
 
         <div className="sm:mx-auto sm:w-full sm:max-w-[480px] mt-12">
           <div className="p shadow sm:rounded-lg">
@@ -20,7 +23,7 @@ export default function AuthForm() {
                   htmlFor="email"
                   className="block text-sm font-medium leading-6 text-sky-500"
                 >
-                  Email address
+                  Username/Email
                 </label>
                 <div className="mt-2">
                   <input
@@ -106,10 +109,12 @@ export default function AuthForm() {
 
               <div className="mt-6 grid grid-cols-1 gap-4">
                 <button
-                onClick={() => signIn('discord', {
-                   redirect: false,
-                })}
-                  className="flex w-full items-center justify-center gap-3 rounded-md bg-[#5865F2] px-3 py-2 text-sm font-semibold text-sky-100 shadow-sm ring-1 ring-inset ring-sky-300 hover:bg-[#4855e2] focus-visible:ring-transparent"
+                  onClick={() =>
+                    signIn("discord", {
+                      redirect: false,
+                    })
+                  }
+                  className="flex w-full items-center justify-center gap-3 rounded-md bg-[#5865F2] px-3 py-2 text-sm font-semibold text-sky-100 shadow-sm hover:bg-[#4855e2] focus-visible:ring-transparent"
                 >
                   <svg
                     className="h-5 w-5"
@@ -133,7 +138,6 @@ export default function AuthForm() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </>

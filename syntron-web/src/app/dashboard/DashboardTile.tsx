@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useRef, useState, useEffect } from "react";
+import React from "react";
 
 export const DashboardTile = ({
   active,
@@ -18,20 +18,20 @@ export const DashboardTile = ({
       <div
         className={`${
           active
-            ? "text-pink-200 border-sky-200 border-opacity-100 bg-sky-700 rounded-tr-lg"
-            : "text-pink-500 border-sky-400 border-opacity-40"
+            ? "text-slate-200 border-sky-200 border-opacity-100 bg-sky-700 rounded-tr-lg font-bold"
+            : "text-slate-300 border-sky-400 border-opacity-40"
         } shadow-lg relative overflow-hidden bg-opacity-30 border-b 
-   hover:text-pink-200 hover:border-pink-200 
+    hover:border-slate-200 
            transition-all duration-200 cursor-pointer w-full px-4 py-2 border-svg tracking-widest group
       `}
       >
-        <div className="flex justify-between w-full place-content-center items-center text-sm ">
+        <div className="flex justify-between w-full place-content-center items-center text-sm transition-all group-hover:text-slate-200 group-hover:font-bold">
         <div>
           <p>
           {children}
           </p>
         </div>
-          <span className="mr-2 w-6 text-sky-500 group-hover:w-8 rounded-xl transition-all">{icon}</span>
+          <span className="mx-4 w-6 text-sky-500 rounded-xl transition-all group-hover:text-slate-200">{icon}</span>
 
         </div>
       </div>

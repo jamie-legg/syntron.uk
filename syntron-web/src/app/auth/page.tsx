@@ -5,7 +5,7 @@ import { CameraControls } from "@/app/camera/CameraControls";
 import { Card } from "@/components/Card";
 import { HomeLink } from "@/components/HomeLink";
 import Navigation from "@/components/Navigation";
-import AuthForm from "@/components/AuthForm";
+import AuthForm from "@/components/auth/AuthForm";
 
 const AuthPage: React.FC = () => {
   return (

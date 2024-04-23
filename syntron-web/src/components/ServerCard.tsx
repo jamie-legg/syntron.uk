@@ -10,7 +10,7 @@ export function ServerCard({ server }: {
   return (
     <Card className="w-full -pl-4">
       <CardHeader>
-        <CardTitle className="text-pink-600">{server_name}</CardTitle>
+        <CardTitle className="text-slate-600">{server_name}</CardTitle>
         <CardDescription>
           {options}
         </CardDescription>

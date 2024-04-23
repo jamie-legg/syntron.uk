@@ -17,6 +17,7 @@ import { TServerInfo, TServersMetadata } from "@/types/TApi";
 import { getServers } from "@/services/api";
 import { ServerCard } from "@/components/ServerCard";
 import Section from "@/components/Section";
+import { Button } from "@/components/ui/button";
 
 const IndexPage: React.FC = () => {
   const [loading, setLoading] = React.useState(true);
@@ -40,7 +41,7 @@ const IndexPage: React.FC = () => {
         setError(e.message);
         setLoading(false);
       });
-  }, []);
+  }, [serversData.length]);
 
   return (
     <>
@@ -53,7 +54,8 @@ const IndexPage: React.FC = () => {
             />
             <Section title="News" sections={[NEWS_TEXT, SUGGESTION_TEXT]} />
             <Section
-              title="Status"
+              title="Game Status"
+              action={<Button>Stats</Button>}
               sections={[`${serversMetadata?.players_online} players online`]}
             >
               <div className="fixed inset-y-16 z-0 flex flex-col mt-16">

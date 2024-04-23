@@ -5,23 +5,30 @@ import { CameraControls } from "@/app/camera/CameraControls";
 import { Card } from "@/components/Card";
 import { HomeLink } from "@/components/HomeLink";
 import Navigation from "@/components/Navigation";
+import Section from "@/components/Section";
+import {
+  AESTHETICS_TEXT,
+  AESTHETICS_WALLS_BOUNDARY_TEXT,
+  AESTHETICS_WALLS_TEXT,
+} from "@/app/consts";
+import { Button } from "@/components/ui/button";
 
 const AestheticsPage: React.FC = () => {
   return (
     <>
       <Navigation>
-        <div className="flex-col w-full">
-          <div className="flex w-full justify-between m-2">
-            <div className="w-96 border-sky-500 border-y">1</div>
-            <div className="w-96 border-sky-500 border-y">
-  
-  2</div>
-            <div className="w-96 border-sky-500 border-y">3</div>
-          </div>
-          <div className="flex w-full">
-            <div className="border-2 border-sky-500 rounded-lg w-full">4</div>
-            <div className="border-2 border-sky-500 rounded-lg w-full">5</div>
-          </div>
+        <div className="flex-col w-full overflow-y-auto">
+          <Section
+            title={"Introduction"}
+            action={<Button>Quickstart</Button>}
+            sections={[AESTHETICS_TEXT]}
+          />
+
+          <Section
+            title={"Walls"}
+            action={<Button>Customise Walls</Button>}
+            sections={[AESTHETICS_WALLS_TEXT, AESTHETICS_WALLS_BOUNDARY_TEXT]}
+          />
         </div>
       </Navigation>
       <Canvas style={{ height: "100vh", background: "#000014" }}>

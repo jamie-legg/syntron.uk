@@ -1,4 +1,5 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
+import { TTabs } from "./auth/TAuthTypes";
 
 // const tabs = [
 //   { name: 'My Account', href: '#', current: false },
@@ -7,12 +8,7 @@ import { cn } from "@/lib/utils"
 //   { name: 'Billing', href: '#', current: false },
 // ]
 
-export default function Tabs({ tabs }: { tabs: {
-    name: string
-    href: string
-    current: boolean
-    }[]
-}) {
+export default function Tabs({ tabs }: { tabs: TTabs[] }) {
   return (
     <div>
       <div className="sm:hidden">
@@ -23,7 +19,7 @@ export default function Tabs({ tabs }: { tabs: {
         <select
           id="tabs"
           name="tabs"
-          className="block w-full rounded-md border-sky-300 focus:border-pink-500 focus:ring-pink-500"
+          className="block w-full rounded-md border-sky-300 focus:border-slate-500 focus:ring-slate-500"
           defaultValue={tabs.find((tab) => tab.current)?.name}
         >
           {tabs.map((tab) => (
@@ -35,23 +31,22 @@ export default function Tabs({ tabs }: { tabs: {
         <div className="border-b border-sky-500">
           <nav className="-mb-px flex justify-around" aria-label="Tabs">
             {tabs.map((tab) => (
-              <a
+              <button
                 key={tab.name}
-                href={tab.href}
                 className={cn(
                   tab.current
-                    ? 'border-pink-500 text-pink-600'
-                    : 'border-transparent text-sky-500 hover:border-sky-300 hover:text-sky-300 transition-all',
-                  'w-1/4 border-b-2 py-4 px-1 text-center text-sm font-medium'
+                    ? "border-slate-500 text-slate-600"
+                    : "border-transparent text-sky-500 hover:border-sky-300 hover:text-sky-300 transition-all",
+                  "w-1/4 border-b-2 py-4 px-1 text-center text-sm font-medium"
                 )}
-                aria-current={tab.current ? 'page' : undefined}
+                aria-current={tab.current ? "page" : undefined}
               >
                 {tab.name}
-              </a>
+              </button>
             ))}
           </nav>
         </div>
       </div>
     </div>
-  )
+  );
 }

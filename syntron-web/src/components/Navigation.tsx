@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { NavBar } from "./Navbar";
 import {
   ArrowDownTrayIcon,
+  HomeIcon,
   IdentificationIcon,
   KeyIcon,
   MegaphoneIcon,
@@ -20,6 +21,11 @@ import { DashboardTile } from "@/app/dashboard/DashboardTile";
 import { SessionProvider } from "next-auth/react";
 
 const routes = [
+  {
+    text:"Home",
+    link:"/",
+    icon: <HomeIcon />
+  },
   {
     text: "Download",
     link: "/download",
@@ -38,13 +44,13 @@ const routes = [
     icon: <StarIcon />,
   },
   {
-    color: "yellow",
+    color: "slate",
     text: "Aesthetics",
     link: "/guide/aesthetics",
     icon: <PaintBrushIcon />,
   },
   {
-    color: "pink",
+    color: "slate",
     text: "Top 100",
     link: "/leaderboard",
     icon: <TrophyIcon />,
@@ -101,8 +107,12 @@ export default function Navigation({
               ))}
             </div>
 
-            <div className="w-284 overflow-y-auto">{children}</div>
+            <div className="w-284 overflow-y-auto flex-col justify-between">{children}
+            </div>
 
+          </div>
+                    <div className="mb-16 z-50 block">
+            <NavBar title={getRouteNameFromPath()} />
           </div>
         </div>
       </div>

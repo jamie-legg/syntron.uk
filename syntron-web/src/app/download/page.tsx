@@ -11,16 +11,13 @@ const DownloadPage: React.FC = () => {
     <>
       <Navigation>
         <div className="flex-col w-full">
-          <div className="flex w-full justify-between m-2">
-            <div className="w-96 border-sky-500 border-y">Steam</div>
-            <div className="w-96 border-sky-500 border-y">
-  
-  Direct Download</div>
-            <div className="w-96 border-sky-500 border-y">3</div>
-          </div>
-          <div className="flex w-full">
-            <div className="border-2 border-sky-500 rounded-lg w-full">4</div>
-            <div className="border-2 border-sky-500 rounded-lg w-full">5</div>
+          <div className="flex w-full justify-around m-2">
+            <div className="w-96 border-sky-500 border-y flex justify-center">
+              Direct Download
+            </div>
+            <div className="w-96 border-sky-500 border-y flex justify-center">
+              Steam
+            </div>
           </div>
         </div>
       </Navigation>

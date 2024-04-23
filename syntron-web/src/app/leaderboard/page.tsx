@@ -18,7 +18,7 @@ const GridSkeleton = () => {
           >
             <div className="flex flex-col w-full">
             {Array.from({length:4}).map((_, index) => (
-              <div key={index} className="h-4 w-full border border-pink-900 mt-6 rounded"></div>
+              <div key={index} className="h-4 w-full border border-slate-900 mt-6 rounded"></div>
             ))}
             </div>
           </div>

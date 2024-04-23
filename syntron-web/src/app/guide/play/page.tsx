@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import React from "react";
 import { Canvas } from "@react-three/fiber";
 import { CameraControls } from "@/app/camera/CameraControls";
@@ -11,16 +11,16 @@ const HowToPlayPage: React.FC = () => {
     <>
       <Navigation>
         <div className="flex-col w-full">
-          <div className="flex w-full justify-between m-2">
-            <div className="w-96 border-sky-500 border-y">1</div>
-            <div className="w-96 border-sky-500 border-y">
-  
-  2</div>
-            <div className="w-96 border-sky-500 border-y">3</div>
-          </div>
-          <div className="flex w-full">
-            <div className="border-2 border-sky-500 rounded-lg w-full">4</div>
-            <div className="border-2 border-sky-500 rounded-lg w-full">5</div>
+          <div className="flex w-full justify-around m-2">
+            <div className="w-96 border-sky-500 border-y flex justify-center">
+              Game Modes
+            </div>
+            <div className="w-96 border-sky-500 border-y flex justify-center">
+              Public Games
+            </div>
+            <div className="w-96 border-sky-500 border-y flex justify-center">
+              Pickup
+            </div>
           </div>
         </div>
       </Navigation>
