@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 export default function Section({
   title,
   sections,
@@ -15,7 +17,7 @@ export default function Section({
         {sections.slice(1).map((section, index) => (
           <div key={index}>
             <div className="my-2 border-b border-sky-800"></div>
-            <div className="pb-2 border-b border-sky-800">{section}</div>
+            <div className={cn(`pb-2 border-sky-800`, index===sections.length-2? `border-b` : ``)}>{section}</div>
           </div>
         ))}
       </div>

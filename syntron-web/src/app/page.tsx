@@ -10,6 +10,8 @@ import {
   WELCOME_TEXT,
   NEWS_BANNER,
   WELCOME_BANNER,
+  MARKETING_TEXT,
+  LETS_GO_TEXT,
 } from "./consts";
 import { TServerInfo, TServersMetadata } from "@/types/TApi";
 import { getServers } from "@/services/api";
@@ -47,9 +49,9 @@ const IndexPage: React.FC = () => {
           <div className="flex w-full justify-between my-2">
             <Section
               title="Welcome"
-              sections={[WELCOME_TEXT, SUGGESTION_TEXT]}
+              sections={[WELCOME_TEXT, MARKETING_TEXT, LETS_GO_TEXT]}
             />
-            <Section title="News" sections={[NEWS_TEXT]} />
+            <Section title="News" sections={[NEWS_TEXT, SUGGESTION_TEXT]} />
             <Section
               title="Status"
               sections={[`${serversMetadata?.players_online} players online`]}

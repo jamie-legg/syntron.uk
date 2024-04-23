@@ -10,7 +10,7 @@ export function ServerCard({ server }: {
   return (
     <Card className="w-full -pl-4">
       <CardHeader>
-        <CardTitle>{server_name}</CardTitle>
+        <CardTitle className="text-pink-600">{server_name}</CardTitle>
         <CardDescription>
           {options}
         </CardDescription>
@@ -28,7 +28,7 @@ export function ServerCard({ server }: {
             <Avatar>
               <AvatarImage src="/placeholder.svg?text=JS&width=32&height=32" />
               <AvatarFallback>{
-                player[0].toUpperCase() + player[1].toUpperCase()
+                player[0]?.toUpperCase() + player[1]?.toUpperCase()
               }
               </AvatarFallback>
             </Avatar>

@@ -7,8 +7,11 @@ export function cn(...inputs: ClassValue[]) {
 
 export const nocache = () => {
   return {
-    params: {
-      timestamp: Date.now(),
-    },
-  };
+      headers: {
+        "content-type": "application/json",
+        "Cache-Control": "public, s-maxage=1",
+        "CDN-Cache-Control": "public, s-maxage=60",
+        "Vercel-CDN-Cache-Control": "public, s-maxage=3600",
+      },
+    }
 };

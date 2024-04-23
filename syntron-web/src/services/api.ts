@@ -1,10 +1,10 @@
-import { nocache } from '@/lib/utils';
+
 import { TCreateUserRequest, TGetRanksResponse, TRanking } from '@/types/TApi';
 import axios from 'axios';
 
 // Create an instance of Axios with custom configuration
 const api = axios.create({
-    baseURL: '',
+    baseURL: '/api',
 });
 
 // Define your API methods
@@ -15,7 +15,7 @@ export const getUsers = () => {
 
 
 export const getServers = async () => {
-    return await api.get('/servers', nocache());
+    return await api.get('/servers');
 }
 
 export const createUser = (userData: TCreateUserRequest) => {
