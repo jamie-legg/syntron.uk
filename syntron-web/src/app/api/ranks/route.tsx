@@ -1,3 +1,4 @@
+import { nocache } from "@/lib/utils";
 import { TRanking } from "@/types/TApi";
 import axios from "axios";
 
@@ -62,10 +63,7 @@ export async function GET(request: Request) {
     const rawRanks = await axios.get("https://www.armanelgtron.tk/tststats/");
     const response = await rawRanks.data;
     const data = parseRankings(response);
-    console.log(data);
-    return new Response(JSON.stringify(data), {
-      headers: { "content-type": "application/json" },
-    });
+    return new Response(JSON.stringify(data), nocache());
   } catch (error) {
     console.error(error);
   }
