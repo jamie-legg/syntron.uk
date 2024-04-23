@@ -36,8 +36,8 @@ export default function Aside({ isOpen, onClose }: { isOpen: boolean, onClose: (
                   <div className="flex h-full flex-col overflow-y-scroll backdrop-filter backdrop-blur-xl border-l border-y border-sky-500 rounded-y-xl rounded-l-xl py-6 shadow-xl">
                     <div className="px-4 sm:px-6">
                       <div className="flex items-start justify-between">
-                        <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                          Panel title
+                        <Dialog.Title className="text-base font-semibold leading-6 text-sky-500">
+                          Syntron Authentication
                         </Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button

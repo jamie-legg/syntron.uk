@@ -17,6 +17,7 @@ import {
   WrenchIcon,
 } from "@heroicons/react/24/outline";
 import { DashboardTile } from "@/app/dashboard/DashboardTile";
+import { SessionProvider } from "next-auth/react";
 
 const routes = [
   {
@@ -79,6 +80,7 @@ export default function Navigation({
   };
 
   return (
+    <SessionProvider>
     <div className="z-10 fixed top-0 w-screen h-screen p-8">
       <div className="flex justify-center items-center h-full">
         <div className="w-full rounded-lg shadow-lg h-full relative text-sky-400 border border-sky-400 border-opacity-30 backdrop-filter backdrop-blur-xl pr-5 transition-all duration-200">
@@ -98,10 +100,13 @@ export default function Navigation({
                 </DashboardTile>
               ))}
             </div>
+
             <div className="w-284 overflow-y-auto">{children}</div>
+
           </div>
         </div>
       </div>
     </div>
+    </SessionProvider>
   );
 }

@@ -1,6 +1,6 @@
 import { nocache } from "@/lib/utils";
 import { TRanking, TServerInfo, TServersMetadata } from "@/types/TApi";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 function parseColor(stringToParse: string): string {
   if (!stringToParse) return "";
@@ -15,6 +15,12 @@ function parseColor(stringToParse: string): string {
 
 export async function GET(request: Request) {
   try {
+    //nocache for the axios options
+    const nocacheoptions: AxiosRequestConfig = {
+      headers: {
+        "Cache-Control": "no-cache",
+      },
+    }
     const rawRanks = await axios.get(
       "https://browser.armanelgtron.tk/servers_link/serverlist_v2.json"
     );

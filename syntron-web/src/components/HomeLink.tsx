@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { useState } from "react";
 import Aside from "./Aside";
+import { useSession } from "next-auth/react";
 
 export const HomeLink = ({ page }: { page: string }) => {
   const [authOpen, setAuthOpen] = useState(false);
+  const { data } = useSession();
+  const loggedIn = data?.user;
   return (
     <>
       <div className="border-b border-sky-500 border-opacity-30 w-full backdrop-filter backdrop-blur-xl h-max fixed inset-y-0 flex z-50 justify-between items-center tracking-widest uppercase py-2 px-4">
@@ -17,7 +20,15 @@ export const HomeLink = ({ page }: { page: string }) => {
             </h1>
           </div>
         </Link>
-
+        {loggedIn && (
+          <Link href="/dashboard">
+            <button className="pt-2 pr-1.5 rounded-lg border border-sky-400 border-opacity-15 hover:border-opacity-85 transition-all duration-200">
+              <h1 className="text-sky-200 tracking-tighter font-bold flex justify-center pr-1 ml-2 h-8">
+                &nbsp;Dashboard
+              </h1>
+            </button>
+          </Link>
+        )}
         <button
           onClick={() => setAuthOpen(true)}
           className="pt-2 pr-1.5 rounded-lg border border-sky-400 border-opacity-15 hover:border-opacity-85 transition-all duration-200"

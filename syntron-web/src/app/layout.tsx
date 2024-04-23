@@ -24,7 +24,9 @@ export default function RootLayout({
   return (
     <html lang="h-full">
       <body className={inter.className + " h-full"}>
+      
         {children}
+        
         <SpeedInsights />
       </body>
     </html>
