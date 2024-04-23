@@ -40,7 +40,7 @@ const IndexPage: React.FC = () => {
         setError(e.message);
         setLoading(false);
       });
-  });
+  }, []);
 
   return (
     <>
