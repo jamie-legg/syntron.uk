@@ -1,4 +1,5 @@
 // pages/api/auth/[...nextauth].ts
+import axios from "axios";
 import NextAuth from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import GoogleProvider from "next-auth/providers/google";
@@ -11,12 +12,35 @@ const handler = NextAuth({
       authorization: {
         params: {
           redirect_uri: process.env.DISCORD_REDIRECT_URI,
-          grant_type: 'authorization_code',
-          code_challenge_method: 'S256',
         }
         
       },
-      checks: ['pkce', 'state'],
+      wellKnown: 'https://discord.com/.well-known/openid-configuration',
+      token: 'https://discord.com/api/oauth2/token',
+      idToken: true,
+      
+      profile: async (profile, tokens) => {
+        const res = await axios.get('https://discord.com/api/users/@me', {
+          headers: {
+            Authorization: `Bearer ${tokens.access_token}`
+          }
+        })
+        console.log('res', res);
+        
+        if(res.status !== 200) {
+          throw new Error('Failed to fetch user info');
+        }
+        const {data:user} = res;
+
+
+        
+        return {
+          id: user.id,
+          name: user.username,
+          email: user.email,
+          image: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`,
+        };
+      }
 
     }),
     GoogleProvider({
@@ -30,16 +54,6 @@ const handler = NextAuth({
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
-  cookies: {
-    pkceCodeVerifier: {
-      name: 'pkceCodeVerifier',
-      options: {
-        httpOnly: true,
-        sameSite: 'none',
-        secure: true,
-      },
-    },
-  }
 });
 
 export { handler as GET, handler as POST };
