@@ -15,6 +15,7 @@ export default function Aside({ isOpen, onClose }: { isOpen: boolean, onClose: (
     onClose()
   }
 
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeHandler}>

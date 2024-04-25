@@ -8,7 +8,7 @@ import { TTabs } from "./auth/TAuthTypes";
 //   { name: 'Billing', href: '#', current: false },
 // ]
 
-export default function Tabs({ tabs }: { tabs: TTabs[] }) {
+export default function Tabs({ tabs, setTabs }: { tabs: TTabs[], setTabs: (tabs: TTabs[]) => void}) {
   return (
     <div>
       <div className="sm:hidden">
@@ -28,14 +28,15 @@ export default function Tabs({ tabs }: { tabs: TTabs[] }) {
         </select>
       </div>
       <div className="hidden sm:block">
-        <div className="border-b border-sky-500">
+        <div className="pb-4 border-b border-sky-500">
           <nav className="-mb-px flex justify-around" aria-label="Tabs">
             {tabs.map((tab) => (
               <button
+                onClick={() => setTabs(tabs.map((t) => ({ ...t, current: t.name === tab.name })))}
                 key={tab.name}
                 className={cn(
                   tab.current
-                    ? "border-slate-500 text-slate-600"
+                    ? "border-slate-300 text-slate-300"
                     : "border-transparent text-sky-500 hover:border-sky-300 hover:text-sky-300 transition-all",
                   "w-1/4 border-b-2 py-4 px-1 text-center text-sm font-medium"
                 )}
