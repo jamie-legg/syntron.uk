@@ -9,13 +9,13 @@ const Button = React.forwardRef<
   <button
     ref={ref}
     className={cn(
-      "pt-2 pr-1.5 rounded-lg border border-sky-400 border-opacity-35 hover:shadow-2xl shadow-sky-400 hover:border-opacity-85 transition-all duration-200 flex justify-center place-content-center align-middle",
+      "pt-2 pr-1.5 rounded-lg border border-sky-400 border-opacity-35 hover:shadow-2xl shadow-sky-400 hover:border-opacity-85 transition-all duration-200",
       className
     )}
     {...props}
   >
     <div className="flex">
-      <h1 className="text-slate-300 font-bold flex justify-center place-content-center pr-1 ml-2 h-full">
+      <h1 className="text-slate-300 font-bold flex justify-center place-content-center pr-1 ml-2 h-8">
         {children}
       </h1>
     </div>
