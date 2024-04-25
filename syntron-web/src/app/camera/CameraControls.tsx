@@ -1,9 +1,7 @@
-"use client";
-
+"use client";;
 import { useRef, useState, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
-import { PerspectiveCamera, Grid, Text3D } from "@react-three/drei";
-import { Color, ColorRepresentation } from "three";
+import { PerspectiveCamera, Grid } from "@react-three/drei";
 
 export const CameraControls = () => {
   const camera = useRef<any>();

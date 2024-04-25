@@ -1,9 +1,7 @@
-"use client";
+"use client";;
 import React from "react";
 import { Canvas } from "@react-three/fiber";
 import { CameraControls } from "@/app/camera/CameraControls";
-import { Card } from "@/components/Card";
-import { HomeLink } from "@/components/HomeLink";
 import Navigation from "@/components/Navigation";
 
 const DownloadPage: React.FC = () => {

@@ -5,13 +5,10 @@ import { NavBar } from "./Navbar";
 import {
   ArrowDownTrayIcon,
   HomeIcon,
-  IdentificationIcon,
   KeyIcon,
   MegaphoneIcon,
   PaintBrushIcon,
   QuestionMarkCircleIcon,
-  RocketLaunchIcon,
-  SparklesIcon,
   StarIcon,
   TrophyIcon,
   UserGroupIcon,
