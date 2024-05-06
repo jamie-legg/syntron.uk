@@ -47,7 +47,7 @@ const IndexPage: React.FC = () => {
     <>
       <Navigation>
         <div className="flex-col w-full">
-          <div className="flex w-full justify-between my-2">
+          <div className="flex flex-col xl:flex-row w-full justify-between my-2">
             <Section
               title="Welcome"
               sections={[WELCOME_TEXT, MARKETING_TEXT, LETS_GO_TEXT]}
@@ -58,7 +58,7 @@ const IndexPage: React.FC = () => {
               action={<Button>Stats</Button>}
               sections={[`${serversMetadata?.players_online} players online`]}
             >
-              <div className="fixed inset-y-16 z-0 flex flex-col mt-16">
+              <div className="flex mt-16">
                 <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-black/10 ring-1 ring-white/5">
                   {loading ? "Loading..." : error ? "Error" : ""}
                   <p className="font-bold"></p>

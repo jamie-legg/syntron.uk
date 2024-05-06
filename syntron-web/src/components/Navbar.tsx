@@ -5,6 +5,7 @@ import { useState } from "react";
 import Aside from "./auth/AuthAside";
 import { Button } from "./ui/button";
 import Image from "next/image";
+import { UserIcon } from "@heroicons/react/24/outline";
 
 export const NavBar = ({ title }: { title: string }) => {
   const [authOpen, setAuthOpen] = useState(false);
@@ -15,7 +16,7 @@ export const NavBar = ({ title }: { title: string }) => {
     <div>
       <div className="border-b border-sky-500 border-opacity-30 w-full backdrop-filter backdrop-blur-xl h-max fixed inset-y-0 flex z-50 justify-between items-center  uppercase py-2 px-4">
         <Link href="/">
-          <div className="flex sapce-x-2 tracking-widest">
+          <div className="flex space-x-2 tracking-widest ml-32">
             <h1 className="text-sky-400 tracking-tighter text-xl font-bold">
               Syntron.uk
             </h1>
@@ -30,7 +31,9 @@ export const NavBar = ({ title }: { title: string }) => {
           &nbsp;{name}</Button>
         ) : (
           <Button onClick={() => setAuthOpen(true)}>
-            &nbsp;Login or Register
+            <UserIcon className="h-6 w-6" />
+            &nbsp;Login
+
           </Button>
         )}
       </div>

@@ -12,7 +12,7 @@ export default function Section({
   children?: React.ReactNode;
 }) {
   return (
-    <div className="mx-2 w-72 z-40 py-2">
+    <div className="mx-2 w-full xl:w-72 z-40 py-2">
     <div className="w-full flex justify-between">
       <h1 className="uppercase font-extrabold text-lg text-slate-300 mt-2">{title}</h1>
       <div className="mb-2">{!!action && action}</div>
