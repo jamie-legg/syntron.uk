@@ -12,36 +12,32 @@ const handler = NextAuth({
       authorization: {
         params: {
           redirect_uri: process.env.DISCORD_REDIRECT_URI,
-        }
-        
+        },
       },
-      wellKnown: 'https://discord.com/.well-known/openid-configuration',
-      token: 'https://discord.com/api/oauth2/token',
+      wellKnown: "https://discord.com/.well-known/openid-configuration",
+      token: "https://discord.com/api/oauth2/token",
       idToken: true,
-      
+
       profile: async (profile, tokens) => {
-        const res = await axios.get('https://discord.com/api/users/@me', {
+        const res = await axios.get("https://discord.com/api/users/@me", {
           headers: {
-            Authorization: `Bearer ${tokens.access_token}`
-          }
-        })
-        console.log('res', res);
-        
-        if(res.status !== 200) {
-          throw new Error('Failed to fetch user info');
+            Authorization: `Bearer ${tokens.access_token}`,
+          },
+        });
+        console.log("res", res);
+
+        if (res.status !== 200) {
+          throw new Error("Failed to fetch user info");
         }
-        const {data:user} = res;
+        const { data: user } = res;
 
-
-        
         return {
           id: user.id,
           name: user.username,
           email: user.email,
           image: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`,
         };
-      }
-
+      },
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -49,8 +45,8 @@ const handler = NextAuth({
       authorization: {
         params: {
           redirect_uri: process.env.GOOGLE_REDIRECT_URI,
-        }
-      }
+        },
+      },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,

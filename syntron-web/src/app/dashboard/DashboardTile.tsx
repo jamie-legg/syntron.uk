@@ -25,13 +25,13 @@ export const DashboardTile = ({
            transition-all duration-200 cursor-pointer w-full px-4 py-2 border-svg tracking-widest group
       `}
       >
-        <div className="flex justify-between w-full place-content-center items-center text-sm transition-all group-hover:text-slate-200 group-hover:font-bold">
+        <div className="flex justify-between w-full place-content-center items-center text-sm transition-all duration-200 group-hover:text-slate-200 group-hover:font-bold">
         <div>
           <p>
           {children}
           </p>
         </div>
-          <span className="mx-4 w-6 text-sky-500 rounded-xl transition-all group-hover:text-slate-200">{icon}</span>
+          <span className="mx-4 w-6 text-sky-500 rounded-xl transition-all duration-200 group-hover:text-slate-200">{icon}</span>
 
         </div>
       </div>
