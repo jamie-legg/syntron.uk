@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+.text-gradient-primary {
+  background: linear-gradient(to right, #004cff, #00aeff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-secondary {
+  background: linear-gradient(to right, #03b8ff, #c1c7f1);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;

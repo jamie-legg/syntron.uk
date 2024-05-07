@@ -1,0 +1,62 @@
+volumes:
+  esdata1:
+    driver: local
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - esdata1:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.9.3
+    ports:
+      - "12201:12201/udp"
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+    depends_on:
+      - elasticsearch
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9600"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.9.3
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+  tron:
+    image: codefossa/armagetronad:latest
+    container_name: TRON
+    ports:
+      - "4534:4534/udp"
+    depends_on:
+      - logstash
+    volumes:
+      - ./syn_uk_settings:/app/server/server
+    restart: unless-stopped
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://localhost:12201"
+        tag: "tron"
+
+  watcher:
+    build: watcher/.
+    container_name: watcher
+    depends_on:
+      - logstash
+    volumes:
+      - ./syn_uk_settings:/app/server/server
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://localhost:12201"
+        tag: "watcher"

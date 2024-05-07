@@ -4,6 +4,8 @@ syn_uk_settings/
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+/armagetron/watcher/node_modules
+/armagetron/watcher/dist
 */build
 */dist
 */node_modules

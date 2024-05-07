@@ -76,22 +76,20 @@ export default function   Navigation({
   const path = usePathname();
 
   const getRouteNameFromPath = () => {
-    if (path === "/") return "Home";
-    return (
-      routes.find((route) => path.includes(route.link))?.text ?? "Not Found"
-    );
+    const title = routes.find((route) => route.link === path)?.text;
+    return title ? title : "404";
   };
 
   return (
     <SessionProvider>
-      <div className="z-10 fixed top-0 w-screen h-screen p-8">
+      <div className="z-10 fixed top-0 w-screen h-screen md:p-4 xl:p-8">
         <div className="flex justify-center items-center h-full">
           <div className="w-full rounded-lg shadow-lg h-full relative text-sky-400 border border-sky-400 border-opacity-30 backdrop-filter backdrop-blur-xl pr-5 transition-all duration-200">
             <div className="mb-16 z-50 block">
-              <NavBar title={getRouteNameFromPath()} />
+              <NavBar getTitle={() => getRouteNameFromPath()} />
             </div>
-            <div className="flex w-full justify-between">
-              <div className="flex flex-col w-48 gap-y-2 my-2 overflow-y-auto">
+            <div className="flex w-full justify-start h-full">
+              <div className="flex-col z-50 h-full w-48 overflow-y-auto bg-black/30 border-r border-sky-200 border-opacity-20">
                 {routes.map((route) => (
                   <DashboardTile
                     active={path === route.link}
@@ -109,7 +107,7 @@ export default function   Navigation({
               </div>
             </div>
             <div className="mb-16 z-50 block">
-              <NavBar title={getRouteNameFromPath()} />
+              <NavBar getTitle={() => getRouteNameFromPath()} />
             </div>
           </div>
         </div>

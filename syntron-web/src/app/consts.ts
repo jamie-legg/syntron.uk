@@ -2,11 +2,11 @@ export const WELCOME_BANNER = `Welcome`;
 
 export const WELCOME_TEXT = `
 
-Armagetron Advanced is not just a game. It's a journey that challenges the true nature of skill. Your reflexes and demands will be tested within the confines of the grid.
+This is not just a game. It's a journey that challenges the true nature of skill. Timing, planning, strategy, reflexes; every part of you will be tested within the confines of the grid.
 `;
 
 export const MARKETING_TEXT = `
- Dive into a world where speed meets strategy, where every second counts and every move could be your last. This is where players are not born but forged in the electric thrum of the cyber battlefield. Join the ranks of the elite, push your limits. Are you ready?
+This is where players are not born but forged on the cyber battlefield. Pick a name, push your limits, make a name for yourself. Are you ready?
 `;
 
 export const LETS_GO_TEXT = `

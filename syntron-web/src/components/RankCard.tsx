@@ -17,7 +17,7 @@ export default function RankCard({playerRank}: {playerRank: TRanking}) {
     } = playerRank;
   return (
   <div
-  className="rounded-lg border border-sky-900 text-card-foreground shadow-sm w-full max-w-md p-6 grid gap-4 relative"
+  className="rounded-lg border border-sky-900 text-card-foreground shadow-sm w-full xl:max-w-md p-2 xl:p-6 grid gap-4 relative"
   data-v0-t="card"
 >
       <div className="flex items-center justify-between">
