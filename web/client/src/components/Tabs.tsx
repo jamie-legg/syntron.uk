@@ -11,23 +11,7 @@ import { TTabs } from "./auth/TAuthTypes";
 export default function Tabs({ tabs, setTabs }: { tabs: TTabs[], setTabs: (tabs: TTabs[]) => void}) {
   return (
     <div>
-      <div className="sm:hidden">
-        <label htmlFor="tabs" className="sr-only">
-          Select a tab
-        </label>
-        {/* Use an "onChange" listener to redirect the user to the selected tab URL. */}
-        <select
-          id="tabs"
-          name="tabs"
-          className="block w-full rounded-md border-sky-300 focus:border-slate-500 focus:ring-slate-500"
-          defaultValue={tabs.find((tab) => tab.current)?.name}
-        >
-          {tabs.map((tab) => (
-            <option key={tab.name}>{tab.name}</option>
-          ))}
-        </select>
-      </div>
-      <div className="hidden sm:block">
+      <div className="block">
         <div className="pb-4 border-b border-sky-500">
           <nav className="-mb-px flex justify-around" aria-label="Tabs">
             {tabs.map((tab) => (

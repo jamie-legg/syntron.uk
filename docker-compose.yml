@@ -17,7 +17,7 @@ services:
     ports:
       - "12201:12201/udp"
     volumes:
-      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - ./armagetron/logstash/pipeline:/usr/share/logstash/pipeline:ro
     depends_on:
       - elasticsearch
     healthcheck:
@@ -40,7 +40,7 @@ services:
     depends_on:
       - logstash
     volumes:
-      - ./syn_uk_settings:/app/server/server
+      - ./armagetron/syn_uk_settings:/app/server/server
     restart: unless-stopped
     logging:
       driver: gelf
@@ -49,14 +49,30 @@ services:
         tag: "tron"
 
   watcher:
-    build: watcher/.
+    build: 
+      context: armagetron/watcher/.
+      dockerfile: Dockerfile
     container_name: watcher
     depends_on:
       - logstash
+      - postgres
     volumes:
-      - ./syn_uk_settings:/app/server/server
-    logging:
-      driver: gelf
-      options:
-        gelf-address: "udp://localhost:12201"
-        tag: "watcher"
+      - ./armagetron/syn_uk_settings:/app/server/server
+      - ./armagetron/watcher:/app
+      - /app/node_modules
+    environment:
+      AUTH_SERVER_URL: ${AUTH_SERVER_URL}
+    command: npm run dev
+
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "7432:5432"
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    restart: unless-stopped

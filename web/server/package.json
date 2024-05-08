@@ -1,5 +1,5 @@
 {
-  "name": "syntron-auth",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,11 +12,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^5.13.0",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
-    "pg": "^8.11.5"
+    "pg": "^8.11.5",
+    "types": "^0.1.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -24,6 +26,7 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/pg": "^8.11.4",
     "nodemon": "^3.1.0",
+    "prisma": "^5.13.0",
     "ts-node": "^10.9.2"
   }
 }

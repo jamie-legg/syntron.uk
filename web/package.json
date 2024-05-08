@@ -1,0 +1,16 @@
+{
+  "name": "syntron.uk-web",
+  "private": true,
+  "workspaces": [
+    "./*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"yarn workspace client dev\" \"yarn workspace server dev\" \"yarn workspace types dev\""
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

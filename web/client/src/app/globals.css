@@ -16,6 +16,14 @@
   -webkit-text-fill-color: transparent;
 }
 
+.text-gradient-tertiary {
+  background: linear-gradient(to right, #004cff, #c1c7f1);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
