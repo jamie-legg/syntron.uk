@@ -77,7 +77,15 @@ export default function   Navigation({
 
   const getRouteNameFromPath = () => {
     const title = routes.find((route) => route.link === path)?.text;
-    return title ? title : "404";
+    if(!title) {
+      // check if path has /u/ if so return the username
+      const pathArray = path.split("/");
+      if (pathArray[1] === "u") {
+        return pathArray[2];
+      }
+      return "404";
+    }
+    return title;
   };
 
   return (

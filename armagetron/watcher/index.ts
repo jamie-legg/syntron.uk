@@ -43,7 +43,6 @@ function watchLogFile(filePath: string): void {
   console.log(`Watching file ${filePath} for changes.`);
   fs.watch(filePath, (eventType, filename) => {
     if (eventType === "change") {
-      console.log(`File ${filename} changed, reading new content.`);
       const fileSize = fs.statSync(filePath).size;
       const start = Math.max(0, fileSize - 1024); // Prevents negative start value
       const logStream = fs.createReadStream(filePath, {
@@ -58,7 +57,6 @@ function watchLogFile(filePath: string): void {
         input: logStream,
       });
       lineReader.on("line", (line: string) => {
-        console.log("Line from file:", line);
         if (line.startsWith("PLAYER_LOGIN")) {
           const [, playerName, claimedLogin] = line.split(" ");
           verifyPlayer(playerName, claimedLogin);

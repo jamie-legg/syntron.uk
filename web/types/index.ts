@@ -8,7 +8,7 @@ import { Request } from 'express';
 // The server will use this to create or update a user in the database
 // The server will then return a JWT token to the client
 
-export type AuthUser = {
+export type UserProfile = {
     id: string;
     name: string;
     imageUrl: string;

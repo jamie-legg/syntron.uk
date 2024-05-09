@@ -5,6 +5,7 @@ import GoogleProvider from 'next-auth/providers/google';
 
 // Typing for the user profile from your Auth Server
 interface UserProfile {
+  provider: string;
   id: string;
   name: string;
   email: string;
@@ -40,6 +41,7 @@ const handler = NextAuth({
 
         // Payload to send to your Auth Server
         const userPayload = {
+          provider: "discord",
           id: discordUser.id,
           name: discordUser.username,
           email: discordUser.email,
@@ -49,6 +51,11 @@ const handler = NextAuth({
         // API call to your Auth Server to create or update the user
         const authServerResponse: AxiosResponse<UserProfile> = await axios.post(`${process.env.SYN_AUTH_URL!}/auth`, userPayload);
 
+        console.log('authServerResponse', authServerResponse);
+
+        console.log('userPayload', userPayload);
+        
+        
         if (authServerResponse.status !== 200) {
           throw new Error("Failed to create or update user on the auth server");
         }

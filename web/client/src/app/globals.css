@@ -17,7 +17,7 @@
 }
 
 .text-gradient-tertiary {
-  background: linear-gradient(to right, #004cff, #c1c7f1);
+  background: linear-gradient(to right, #275acf, #808eff);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
