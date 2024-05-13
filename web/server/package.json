@@ -13,8 +13,10 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.13.0",
+    "@types/dockerode": "^3.3.29",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
+    "dockerode": "^4.0.2",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.5",

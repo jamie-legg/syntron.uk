@@ -5,6 +5,10 @@ import jwt from "jsonwebtoken";
 import axios from "axios";
 import { armaAuth } from "./arma";
 import { PrismaClient } from "@prisma/client";
+import Docker from 'dockerode';
+
+// Initialize the Dockerode instance
+const docker = new Docker();
 
 const app = express();
 app.use(express.json());
@@ -104,6 +108,35 @@ function authenticateToken(req: Request, res: Response, next: Function) {
     next();
   });
 }
+
+// Route to write to input.txt inside a specific Docker container
+app.post('/containers/:id/write', async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { content } = req.body; // Expecting content to write in input.txt
+
+  try {
+    const container = docker.getContainer(id);
+    const exec = await container.exec({
+      AttachStdout: true,
+      AttachStderr: true,
+      Cmd: ['sh', '-c', `echo "${content}" >> /app/server/server/var/input.txt`]
+    });
+
+    const stream = await exec.start({ hijack: true, stdin: true });
+
+    stream.on('data', (chunk) => {
+      console.log(chunk.toString());
+    });
+
+    stream.on('end', () => {
+      res.send('Content written to input.txt');
+    });
+
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send('Failed to write to file');
+  }
+});
 
 
 // Start the server

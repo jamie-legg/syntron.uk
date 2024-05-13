@@ -9,6 +9,9 @@ mkdir -p syn_uk_settings/pub/var
 # Default output consolelog
 touch syn_uk_settings/pub/var/consolelog.txt
 
+# Default input input.txt
+touch syn_uk_settings/pub/var/input.txt
+
 # Create settings.cfg
 cat > syn_uk_settings/pub/var/settings_custom.cfg <<EOL
 RINCLUDE vov/games/sumo/bar_v1.cfg
