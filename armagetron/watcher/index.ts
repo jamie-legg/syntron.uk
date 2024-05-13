@@ -2,7 +2,9 @@ import * as fs from "fs";
 import * as readline from "readline";
 import * as dgram from "dgram";
 
-const logPath = "/app/server/server/var/ladderlog.txt";
+const baseDir = "/settings";
+const servers = ["tst", "pub"];
+const outputPath = `var/ladderlog.txt`;
 const logstashHost = "logstash";
 const logstashPort = 12201;
 let connectionAttempts = 0;
@@ -20,27 +22,41 @@ function sendLogToLogstash(logMessage: string, retryCount: number = 3): void {
   const client = dgram.createSocket("udp4");
   const messageBuffer = Buffer.from(gelfMessage + "\n"); // Add a newline character after the message
 
-  client.send(messageBuffer, 0, messageBuffer.length, logstashPort, logstashHost, (error) => {
-    if (error) {
-      client.close();
-      if (retryCount > 0) {
-        const retryDelay = Math.pow(2, 3 - retryCount) * 1000; // Exponential backoff
-        setTimeout(() => {
-          sendLogToLogstash(logMessage, retryCount - 1);
-        }, retryDelay);
+  client.send(
+    messageBuffer,
+    0,
+    messageBuffer.length,
+    logstashPort,
+    logstashHost,
+    (error) => {
+      if (error) {
+        client.close();
+        if (retryCount > 0) {
+          const retryDelay = Math.pow(2, 3 - retryCount) * 1000; // Exponential backoff
+          setTimeout(() => {
+            sendLogToLogstash(logMessage, retryCount - 1);
+          }, retryDelay);
+        } else {
+          console.error(
+            "UDP send to Logstash failed after multiple attempts. Log message discarded."
+          );
+        }
       } else {
-        console.error(
-          "UDP send to Logstash failed after multiple attempts. Log message discarded."
-        );
+        client.close();
       }
-    } else {
-      client.close();
     }
+  );
+}
+
+function watchLogFiles(): void {
+  console.log(`Watching files from ${servers.length} servers for changes.`);
+  const filePaths = servers.map((server) => `${baseDir}/${server}/log.txt`);
+  filePaths.forEach((filePath) => {
+    watchFile(filePath);
   });
 }
 
-function watchLogFile(filePath: string): void {
-  console.log(`Watching file ${filePath} for changes.`);
+const watchFile = (filePath: string) => {
   fs.watch(filePath, (eventType, filename) => {
     if (eventType === "change") {
       const fileSize = fs.statSync(filePath).size;
@@ -67,7 +83,7 @@ function watchLogFile(filePath: string): void {
       });
     }
   });
-}
+};
 
 function verifyPlayer(playerName: string, claimedLogin: string): void {
   console.log(`Verifying player ${playerName} with login ${claimedLogin}`);
@@ -78,5 +94,5 @@ setTimeout(async () => {
   console.log = (...args: any[]) => {
     sendLogToLogstash(args.join(" "));
   };
-  watchLogFile(logPath);
+  watchLogFiles();
 }, 90000);

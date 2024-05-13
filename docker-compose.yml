@@ -32,21 +32,39 @@ services:
       - "5601:5601"
     depends_on:
       - elasticsearch
-  tron:
+  
+  tron_pub:
     image: codefossa/armagetronad:latest
-    container_name: TRON
+    container_name: TRON_PUB
     ports:
       - "4534:4534/udp"
     depends_on:
       - logstash
     volumes:
-      - ./armagetron/syn_uk_settings:/app/server/server
+      - ./armagetron/syn_uk_settings/pub:/app/server/server
     restart: unless-stopped
     logging:
       driver: gelf
       options:
         gelf-address: "udp://localhost:12201"
         tag: "tron"
+
+  tron_tst:
+    image: codefossa/armagetronad:latest
+    container_name: TRON_TST
+    ports:
+      - "4535:4535/udp"
+    depends_on:
+      - logstash
+    volumes:
+      - ./armagetron/syn_uk_settings/tst:/app/server/server
+    restart: unless-stopped
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://localhost:12201"
+        tag: "tron"
+    
 
   watcher:
     build: 
@@ -57,7 +75,7 @@ services:
       - logstash
       - postgres
     volumes:
-      - ./armagetron/syn_uk_settings:/app/server/server
+      - ./armagetron/syn_uk_settings:/settings
       - ./armagetron/watcher:/app
       - /app/node_modules
     environment:

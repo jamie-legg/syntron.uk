@@ -105,38 +105,6 @@ function authenticateToken(req: Request, res: Response, next: Function) {
   });
 }
 
-const CLIENT_ID = 'YOUR_DISCORD_CLIENT_ID';
-const CLIENT_SECRET = 'YOUR_DISCORD_CLIENT_SECRET';
-const REDIRECT_URI = 'http://localhost:3000/api/auth/callback';
-
-app.get('/auth/discord', (req: Request, res: Response) => {
-  const redirectUri = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=code&scope=identify%20email`;
-  res.redirect(redirectUri);
-});
-
-app.get('/auth/callback', async (req: Request, res: Response) => {
-  const code = req.query.code as string;
-  try {
-    const tokenResponse = await axios.post('https://discord.com/api/oauth2/token', new URLSearchParams({
-      client_id: CLIENT_ID,
-      client_secret: CLIENT_SECRET,
-      code,
-      grant_type: 'authorization_code',
-      redirect_uri: REDIRECT_URI,
-    }), {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    });
-
-    const { data } = tokenResponse;
-    res.cookie('access_token', data.access_token, { httpOnly: true });
-    res.redirect('http://localhost:3000/profile');
-  } catch (error) {
-    res.status(500).send('Authentication failed');
-  }
-});
-
 
 // Start the server
 app.listen(3300, () => {

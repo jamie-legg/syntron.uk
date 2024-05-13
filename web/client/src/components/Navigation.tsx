@@ -93,11 +93,11 @@ export default function   Navigation({
       <div className="z-10 fixed top-0 w-screen h-screen md:p-4 xl:p-8">
         <div className="flex justify-center items-center h-full">
           <div className="w-full rounded-lg shadow-lg h-full relative text-sky-400 border border-sky-400 border-opacity-30 backdrop-filter backdrop-blur-xl pr-5 transition-all duration-200">
-            <div className="mb-16 z-50 block">
+            <div className="mb-14 z-50 block">
               <NavBar getTitle={() => getRouteNameFromPath()} />
             </div>
             <div className="flex w-full justify-start h-full">
-              <div className="flex-col z-50 h-full w-48 overflow-y-auto bg-black/30 border-r border-sky-200 border-opacity-20">
+              <div className="flex-col z-50 h-full w-48 overflow-y-auto bg-black/30 border-r border-sky-200 border-opacity-20 mt-0.5">
                 {routes.map((route) => (
                   <DashboardTile
                     active={path === route.link}
