@@ -5,8 +5,6 @@ services:
     container_name: TRON_PUB
     ports:
       - "4534:4534/udp"
-    depends_on:
-      - logstash
     volumes:
       - ./armagetron/syn_uk_settings/pub:/app/server/server
     restart: unless-stopped
@@ -16,8 +14,6 @@ services:
     container_name: TRON_TST
     ports:
       - "4535:4535/udp"
-    depends_on:
-      - logstash
     volumes:
       - ./armagetron/syn_uk_settings/tst:/app/server/server
     restart: unless-stopped
@@ -29,7 +25,6 @@ services:
       dockerfile: Dockerfile
     container_name: watcher
     depends_on:
-      - logstash
       - postgres
     volumes:
       - ./armagetron/syn_uk_settings:/settings
