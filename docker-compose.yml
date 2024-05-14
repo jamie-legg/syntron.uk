@@ -43,11 +43,6 @@ services:
     volumes:
       - ./armagetron/syn_uk_settings/pub:/app/server/server
     restart: unless-stopped
-    logging:
-      driver: gelf
-      options:
-        gelf-address: "udp://localhost:12201"
-        tag: "tron"
 
   tron_tst:
     image: codefossa/armagetronad:latest
@@ -59,11 +54,6 @@ services:
     volumes:
       - ./armagetron/syn_uk_settings/tst:/app/server/server
     restart: unless-stopped
-    logging:
-      driver: gelf
-      options:
-        gelf-address: "udp://localhost:12201"
-        tag: "tron"
     
 
   watcher:
