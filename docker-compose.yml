@@ -10,9 +10,7 @@ services:
     restart: unless-stopped
 
   tron_tst:
-    build: 
-      context: armagetron/tst/.
-      dockerfile: Dockerfile
+    image: codefossa/armagetronad:latest
     container_name: TRON_TST
     ports:
       - "4535:4535/udp"
