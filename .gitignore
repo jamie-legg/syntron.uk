@@ -1,5 +1,6 @@
-syn_uk_settings/
+syn_*/
 scripts/deploy_config.sh
+ssh-*
 
 .env
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.

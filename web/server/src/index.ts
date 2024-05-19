@@ -6,6 +6,8 @@ import axios from "axios";
 import { armaAuth } from "./arma";
 import { PrismaClient } from "@prisma/client";
 import Docker from 'dockerode';
+import { RoundFactory } from "./factories/RoundFactory";
+import { MatchFactory } from "./factories/MatchFactory";
 
 // Initialize the Dockerode instance
 const docker = new Docker();
@@ -14,7 +16,7 @@ const app = express();
 app.use(express.json());
 
 // PostgreSQL connection configuration
-const prisma = new PrismaClient();
+export const prisma = new PrismaClient();
 
 // Middleware to log requests
 app.use((req: Request, res: Response, next: Function) => {
@@ -23,6 +25,9 @@ app.use((req: Request, res: Response, next: Function) => {
   console.log("Body:", req.body);
   next();
 });
+
+app.use("/round", RoundFactory.routes());
+app.use("/match", MatchFactory.routes());
 
 app.post("/auth/", async (req: Request, res: Response) => {
   const { id, name, email, image } = req.body;

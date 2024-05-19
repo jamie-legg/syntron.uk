@@ -1,0 +1,10 @@
+services:
+  
+  tron_pub:
+    image: codefossa/armagetronad:latest
+    container_name: TRON_PUB
+    ports:
+      - "4534:4534/udp"
+    volumes:
+      - ./armagetron/syn_us_settings/pub:/app/server/server
+    restart: unless-stopped
