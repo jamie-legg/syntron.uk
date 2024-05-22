@@ -33,3 +33,13 @@ model ValidationCode {
   expiresAt DateTime
   used      Boolean  @default(false)
 }
+
+model Player {
+  id        Int      @id @default(autoincrement())
+  nickname      String
+  login       String
+  points      Int
+  kdr         Float
+  matches     Int
+  ip          String
+}

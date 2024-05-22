@@ -8,9 +8,17 @@ import { PrismaClient } from "@prisma/client";
 import Docker from 'dockerode';
 import { RoundFactory } from "./factories/RoundFactory";
 import { MatchFactory } from "./factories/MatchFactory";
+import { config } from "dotenv";
 
 // Initialize the Dockerode instance
 const docker = new Docker();
+
+import path from 'path';
+
+// Load environment variables from .env file
+config({ path: path.resolve(__dirname, '../.env') });
+
+console.log('Database URL:', process.env.DATABASE_URL);
 
 const app = express();
 app.use(express.json());
