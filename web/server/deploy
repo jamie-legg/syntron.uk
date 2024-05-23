@@ -10,11 +10,12 @@ else
 fi
 
 # Check if all required environment variables are set
-if [ -z "$SERVER_USER" ] || [ -z "$SERVER_IP" ] || [ -z "$DESTINATION_PATH" ] || [ -z "$SSH_PASSWORD" ]; then
+if [ -z "$SERVER_USER" ] || [ -z "$SERVER_IP" ] || [ -z "$DESTINATION_PATH" ] || [ -z "$SSH_PASSWORD" ] || [ -z "$DATABASE_URL_PROD" ]; then
     echo "Error: One or more environment variables are undefined."
     echo "Make sure SERVER_USER, SERVER_IP, DESTINATION_PATH, and SSH_PASSWORD are set in .env."
     exit 1
 fi
+
 
 APP_NAME="armaauth"
 LOCAL_BUILD_PATH="./build"
@@ -75,6 +76,9 @@ node -v
 cd $DESTINATION_PATH
 tar -xzf $ARCHIVE_NAME
 rm $ARCHIVE_NAME
+
+# Set the database URL
+export DATABASE_URL=$DATABASE_URL_PROD
 
 # Install npm dependencies
 npm install

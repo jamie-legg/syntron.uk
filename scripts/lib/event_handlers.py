@@ -113,8 +113,7 @@ def handle_match_ended(line):
         matchData["rounds"].append(roundData)
         matchData["date"] = datetime.now().isoformat()
         post_data(matchData, MATCH_URL)
-        
-        matchData = {"rounds": [], "totalTime": 0}
+        matchData = {"rounds": [], "totalTime": 0, "teamStats": [], "players": []}
         roundCounter = 0
         for player in authPlayers:
             player["currentMatchPoints"] = 0

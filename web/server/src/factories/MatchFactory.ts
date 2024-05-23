@@ -66,7 +66,7 @@ export class MatchFactory {
     const updatedPlayers =  orderedPlayers.forEach(async (player, index) => {
             const { nickname, ip, auth, login } = player
       if (!auth) return
-      const points = maxPoints - ((players.length - index) * 10)
+      const points = maxPoints - (index * 10)
 
       console.log('Calculating points for' + nickname + ' ' + points + ' points for ' + index + ' place')
       

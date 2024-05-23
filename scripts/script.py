@@ -26,7 +26,7 @@ while True:
     line = input()
     event_checker.set_line(line)
     # DEBUG
-    debug(line)
+    # debug(line)
     try:
         #! A
         if e("ADMIN_COMMAND"):
