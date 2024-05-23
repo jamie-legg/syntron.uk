@@ -35,8 +35,8 @@ def fetch_and_generate_motd():
 def schedule_motd_update():
     while True:
         fetch_and_generate_motd()
-        # Wait for an hour (3600 seconds)
-        timer.sleep(3600)
+        # Wait for 5 minutes
+        timer.sleep(300)
 
 
 def elapsed_time():

@@ -22,7 +22,6 @@ def initialize_players():
 
 def handle_auth_player(data):
     global authPlayers
-    print("CONSOLE_MESSAGE " + "Welcome!" +str(data))
     nickname = data[1]
     ip = data[2]
     login = None
@@ -47,7 +46,6 @@ def handle_game_time(data):
 
 def handle_positions(data):
     global alivePlayers, stats
-    print("CONSOLE_MESSAGE" + str(data))
     for i in range(1, len(data)):
         alivePlayers.append(data[i])
         stats[data[i]] = {
@@ -104,7 +102,6 @@ def handle_new_round():
 
 def handle_match_ended(line):
     global recordMatch, matchData, roundCounter
-    print(f"CONSOLE_MESSAGE {line}")
     if recordMatch:
         for player in stats:
             if player != "ADMIN":
@@ -175,7 +172,6 @@ def handle_remove_player(data):
 def handle_check_auth():
     global authPlayers
     for player in authPlayers:
-        print(f"CONSOLE_MESSAGE {player['nickname']} {player['auth']}")
         if not player["auth"]:
             print(f"CENTER_PLAYER_MESSAGE {player['nickname']} '0xfcba03Login to save your stats!'")
 
