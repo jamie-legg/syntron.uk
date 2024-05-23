@@ -1,12 +1,7 @@
 import { Router, Request, Response } from 'express'
 import { prisma } from '..'
+import { RoundPlayerEntry } from '../types'
 
-type TRoundPlayerEntry = {
-  nickname: string
-  ip: string
-  auth: boolean
-  login: string
-}
 
 export class RoundFactory {
   public static routes(): Router {
@@ -49,7 +44,7 @@ export class RoundFactory {
     //? Every round we check if the players present in the round are already present in the database
     //? if not we add them to the database, as well as updating nicknames
 
-    const roundEntry = req.body as TRoundPlayerEntry[]
+    const roundEntry = req.body as RoundPlayerEntry[]
     const newPlayerNames:string[] = []
     roundEntry.forEach(async (entry) => {
       const { nickname, ip, auth, login } = entry

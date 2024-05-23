@@ -27,7 +27,7 @@ def handle_auth_player(data):
     ip = data[2]
     login = None
     auth = False
-    authPlayers.append({"nickname": nickname, "ip": ip, "auth": auth, "login": login})
+    authPlayers.append({"nickname": nickname, "ip": ip, "auth": auth, "login": login, "currentMatchPoints": 0})
 
 def handle_player_login(data):
     global authPlayers
@@ -67,11 +67,13 @@ def handle_conquerer_team(data):
     roundData["conquerLogs"].append(conqLog)
 
 def handle_current_map(data):
-    global roundData, time, roundCounter
-    time = -5
-    roundCounter += 1
-    initialize_round_data()
-    initialize_players()
+    global roundData, time, roundCounter, recordMatch
+    if(recordMatch):
+        time = -5
+        roundCounter += 1
+        initialize_round_data()
+        initialize_players()
+        roundData["roundNum"] = roundCounter
 
 def handle_sacrifice(data):
     global roundData
@@ -100,7 +102,7 @@ def handle_new_round():
             post_data(authPlayers, ROUND_URL)
     paused = False
 
-def handle_match_winner(line):
+def handle_match_ended(line):
     global recordMatch, matchData, roundCounter
     print(f"CONSOLE_MESSAGE {line}")
     if recordMatch:
@@ -113,6 +115,19 @@ def handle_match_winner(line):
         post_data(matchData, MATCH_URL)
         
         matchData = {"rounds": [], "totalTime": 0}
+        roundCounter = 0
+        for player in authPlayers:
+            player["currentMatchPoints"] = 0
+
+def handle_match_score_team(data):
+    global matchData, matchTeamStats, authPlayers
+    score = int(data[1])
+    playerName = data[2]
+    for player in authPlayers:
+        if player["nickname"] == playerName:
+            player["currentMatchPoints"] += score
+            matchData["players"].append(player)
+
 
 def handle_basezone_conquerer(data):
     global conquerers            
@@ -175,9 +190,6 @@ def handle_new_player(data):
 
 def handle_grid_pos(data):
     global gridpos, time, roundData
-    print(gridpos)
-    print(time)
-    print(roundData)
     gridpos[data[1]] = [float(data[2]), float(data[3]), data[4], data[5], float(data[6]), float(data[7]), data[9]]
     rgridpos = {
         "username": data[1], "posX": float(data[2]), "posY": float(data[3]), "dirX": int(data[4]), "dirY": int(data[5]),
@@ -185,3 +197,4 @@ def handle_grid_pos(data):
     }
     if time >= 0:
         roundData["gridposLogs"].append(rgridpos)
+        roundData["totalTime"] = time

@@ -9,10 +9,40 @@ def debug(line):
         print(f"CONSOLE_MESSAGE {line}")
     return
 
+def get_ranks():
+    try:
+        req = urllib.request.Request(RANKS_URL, headers={'Content-Type': 'application/json'})
+        with urllib.request.urlopen(req) as response:
+            data = json.loads(response.read().decode())
+            # Return an array of arrays with just the values
+            print(data)
+            return [[str(item["nickname"]), str(item["points"]), str(item["matches"])] for item in data]
+    except Exception as e:
+        print(f"Failed to fetch ranks: {e}")
+        return []
+
+def fetch_and_generate_motd():
+    global motd
+    print("CONSOLE_MESSAGE Fetching ranks")
+    ranks_data = get_ranks()
+    print("CONSOLE_MESSAGE Generating MOTD")
+    headers = ["Nickname", "Points", "Matches"]
+    print(headers)
+    print(ranks_data)
+    motd = motd_base + generate_ascii_table(headers, ranks_data)
+    print("MESSAGE_OF_DAY " + motd)
+
+def schedule_motd_update():
+    while True:
+        fetch_and_generate_motd()
+        # Wait for an hour (3600 seconds)
+        timer.sleep(3600)
+
 
 def elapsed_time():
     global start_time
     return timer.time() - start_time
+
 
 def post_data(data, url):
     try:

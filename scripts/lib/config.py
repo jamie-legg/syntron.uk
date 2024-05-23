@@ -1,14 +1,13 @@
 # lib/config.py
-import sys
 
 API_URL = 'http://host.docker.internal:3300/'
 ROUND_URL = API_URL + 'round'
 MATCH_URL = API_URL + 'match'
+RANKS_URL = API_URL + 'ranks'
 
 print("WAIT_FOR_EXTERNAL_SCRIPT 1\nWAIT_FOR_EXTERNAL_SCRIPT_TIMEOUT 1")
 print("LADDERLOG_WRITE_ALL 1|1")
 print("PLAYER_GRIDPOS_INTERVAL 5")
-sys.stdin.reconfigure(encoding="latin1")
 
 motd_base = "0xffffff- 0x0099ffThe Grid 0xffffff| 0xe0b231Sumobar Casual League 0xffffff| 0xff4000May 24 0xffffff| 0xaa44ffEU \n0xffffff- Public Sumobar with monthly cash prizes. \nView your stats and more at https://syntron.uk\n\n0xff0000Work in progress. Please report any issues to Syn!\n0xffffff".encode("unicode_escape").decode("utf-8")
 sample_data = [
@@ -26,7 +25,8 @@ deadPlayers = []
 gridpos = {}
 stats = {}
 conquerers = []
-matchData = {"rounds": [], "totalTime": 0}
+matchData = {"rounds": [], "totalTime": 0, "teamStats": [], "players": []}
+matchTeamStats = {"isWinner": False, "teamName": ""}
 roundData = {}
 roundCounter = 0
 recordMatch = False

@@ -14,6 +14,7 @@ import { config } from "dotenv";
 const docker = new Docker();
 
 import path from 'path';
+import { RankFactory } from "./factories/RankFactory";
 
 // Load environment variables from .env file
 config({ path: path.resolve(__dirname, '../.env') });
@@ -36,6 +37,7 @@ app.use((req: Request, res: Response, next: Function) => {
 
 app.use("/round", RoundFactory.routes());
 app.use("/match", MatchFactory.routes());
+app.use("/ranks", RankFactory.routes());
 
 app.post("/auth/", async (req: Request, res: Response) => {
   const { id, name, email, image } = req.body;

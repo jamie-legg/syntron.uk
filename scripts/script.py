@@ -3,13 +3,21 @@ from lib.config import *
 from lib.event_handlers import *
 from lib.event_checker import EventChecker
 from lib.utils import *
+import threading
+import sys
 
 initialize_players()
 initialize_round_data()
 event_checker = EventChecker()
 
-motd = motd_base + generate_ascii_table(["Username", "Score", "Wins", "Losses", "Kills", "Deaths", "KDR", "Time"], sample_data)
-print("MESSAGE_OF_DAY " + motd)
+# Initialize the MOTD when the script starts
+fetch_and_generate_motd()
+
+# Start the scheduler thread
+scheduler_thread = threading.Thread(target=schedule_motd_update)
+scheduler_thread.daemon = True
+scheduler_thread.start()
+sys.stdin.reconfigure(encoding="latin1")
 
 def e(event_type):
     return event_checker.e(event_type)
@@ -49,8 +57,10 @@ while True:
         #! K
         #! L
         #! M
-        elif e("MATCH_WINNER"):
-            handle_match_winner(line)
+        elif e("MATCH_ENDED"):
+            handle_match_ended(line)
+        elif e("MATCH_SCORE_TEAM"):
+            handle_match_score_team(line.split())
         #! N
         elif e("NEW_ROUND"):
             handle_new_round()
