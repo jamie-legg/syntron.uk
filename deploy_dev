@@ -1,0 +1,16 @@
+# Copy script.py to both servers
+echo "Deploying script.py"
+cp -r scripts/ armagetron/syn_us_settings/pub/scripts/
+cp -r scripts/ armagetron/syn_uk_settings/pub/scripts/
+
+# Rename the script to script-out.py
+mv armagetron/syn_us_settings/pub/scripts/script.py armagetron/syn_us_settings/pub/scripts/script-out.py
+mv armagetron/syn_uk_settings/pub/scripts/script.py armagetron/syn_uk_settings/pub/scripts/script-out.py
+
+# Make sure the script is executable
+chmod +x armagetron/syn_us_settings/pub/scripts/script-out.py
+chmod +x armagetron/syn_uk_settings/pub/scripts/script-out.py
+
+# Restart docker
+echo "Restarting servers"
+docker-compose down && docker-compose --env-file .env up -d --build

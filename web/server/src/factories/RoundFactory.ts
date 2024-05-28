@@ -68,7 +68,6 @@ export class RoundFactory {
             ip,
             login,
             points: 0,
-            kdr: 0,
             matches: 0,
           }
         })

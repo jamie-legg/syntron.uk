@@ -1,5 +1,5 @@
 syn_*/
-scripts/deploy_config.sh
+deploy_config
 ssh-*
 
 .env

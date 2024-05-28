@@ -23,6 +23,10 @@ export type RoundPlayerEntry = {
   auth: boolean
   login: string
   currentMatchPoints: number
+  kills: number
+  deaths: number
+  time: number
+  active: boolean
 }
 
 export interface GridposLog {
@@ -70,4 +74,5 @@ export interface GameData {
   date: string;
   teamStats: any[];
   players: RoundPlayerEntry[];
+  playerCounts: number[];
 }

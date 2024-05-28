@@ -39,7 +39,9 @@ model Player {
   nickname      String
   login       String
   points      Int
-  kdr         Float
-  matches     Int
+  matches     Int @default(0)
   ip          String
+  kills       Int @default(0)
+  deaths      Int @default(0)
+  timePlayed  Int @default(0)
 }

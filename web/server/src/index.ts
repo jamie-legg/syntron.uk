@@ -24,16 +24,10 @@ console.log('Database URL:', process.env.DATABASE_URL);
 const app = express();
 app.use(express.json());
 
+app.use(express.json({ limit: '50mb' }));
+
 // PostgreSQL connection configuration
 export const prisma = new PrismaClient();
-
-// Middleware to log requests
-app.use((req: Request, res: Response, next: Function) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  console.log("Headers:", req.headers);
-  console.log("Body:", req.body);
-  next();
-});
 
 app.use("/round", RoundFactory.routes());
 app.use("/match", MatchFactory.routes());

@@ -14,21 +14,32 @@ def get_ranks():
         req = urllib.request.Request(RANKS_URL, headers={'Content-Type': 'application/json'})
         with urllib.request.urlopen(req) as response:
             data = json.loads(response.read().decode())
-            # Return an array of arrays with just the values
-            print(data)
-            return [[str(item["nickname"]), str(item["points"]), str(item["matches"])] for item in data]
+            return [[str(item["login"]), str(item["points"]), str(item["matches"]), str(item["kd"])] for item in data]
     except Exception as e:
         print(f"Failed to fetch ranks: {e}")
         return []
+    
+def send_stats(player):
+    # stats are ranks url with login as query param
+    stats_url = f"{RANKS_URL}?login={player['login']}"
+    try:
+        req = urllib.request.Request(stats_url, headers={'Content-Type': 'application/json'})
+        with urllib.request.urlopen(req) as response:
+            data = json.loads(response.read().decode())
+            stats = data
+            title = player['nickname']
+            headers = ["Rank", "Points", "Matches", "K/D"]
+            rows = [[str(stats["rank"]), str(stats["points"]), str(stats["matches"]), str(stats["kd"])]]
+            generate_ascii_table(headers, rows, title, "PLAYER_MESSAGE "+player['nickname'])
+
+    except Exception as e:
+        raise e
+        return
 
 def fetch_and_generate_motd():
     global motd
-    print("CONSOLE_MESSAGE Fetching ranks")
     ranks_data = get_ranks()
-    print("CONSOLE_MESSAGE Generating MOTD")
-    headers = ["Nickname", "Points", "Matches"]
-    print(headers)
-    print(ranks_data)
+    headers = ["User", "Points", "Matches", "K/D"]
     motd = motd_base + generate_ascii_table(headers, ranks_data)
     print("MESSAGE_OF_DAY " + motd)
 
@@ -38,50 +49,82 @@ def schedule_motd_update():
         # Wait for 5 minutes
         timer.sleep(300)
 
+def check_player_exists(name):
+    global authPlayers
+    return any(player["nickname"] == name or player["login"] == name for player in authPlayers)
+
+def match_add_if_not_includes(player, matchData):
+    found = False
+    for p in matchData["players"]:
+        if p["nickname"] == player["nickname"]:
+            found = True
+            break
+    if not found:
+        if(player["auth"]):
+            matchData["players"].append(player)
 
 def elapsed_time():
     global start_time
     return timer.time() - start_time
 
+def print_stats():
+    rows = get_ranks()
+    headers = ["User", "Points", "Matches", "K/D"]
+    title = "Top 5 Players"
+    generate_ascii_table(headers, rows, title, "CONSOLE_MESSAGE ")
 
 def post_data(data, url):
     try:
+        #print(f"CONSOLE_MESSAGE Posting data to {url} with data: {data}")
         data = json.dumps(data).encode('utf-8')
         req = urllib.request.Request(url, method="POST", data=data, headers={'Content-Type': 'application/json'})
         with urllib.request.urlopen(req) as response:
-            status_code = response.getcode()
-            message = json.loads(response.read().decode('utf-8'))['message']
-            print(f"CONSOLE_MESSAGE {message}")
+            response_data = response.read().decode()
+            #print(f"CONSOLE_MESSAGE Response: {response_data}")
     except urllib.error.URLError as e:
         status_code = e.code if hasattr(e, 'code') else 500
-        print(f"CONSOLE_MESSAGE Error: {e.reason}")
+        print(f"CONSOLE_MESSAGE Error: {e.reason}, Status Code: {status_code}")
+    except Exception as e:
+        print(f"CONSOLE_MESSAGE Unexpected error: {str(e)}")
 
-    if status_code != 200:
-        filename = 'data_' + timer.strftime("%Y%m%d-%H%M%S") + '.json'
-        with open(filename, 'x') as file:
-            file.write(json.dumps(data))
 
-def generate_ascii_table(headers, rows):
+
+
+def generate_ascii_table(headers, rows, title=None, message=None):
     # Determine the width of each column
     col_widths = [len(header) for header in headers]
+
+    if title:
+        title_width = len(title)
+        col_widths = [max(title_width, width) for width in col_widths]
     
     for row in rows:
         for i, cell in enumerate(row):
             col_widths[i] = max(col_widths[i], len(cell))
     
     # Create a format string for each row
-    row_format = "| " + " | ".join(["{:<" + str(width) + "}" for width in col_widths]) + " |"
-    separator = "+-" + "-+-".join(["-" * width for width in col_widths]) + "-+"
+    row_format = "    | " + " | ".join(["{:<" + str(width) + "}" for width in col_widths]) + " |"
+    separator = "    +-" + "-+-".join(["-" * width for width in col_widths]) + "-+"
+
     
     # Generate the table
     table = []
     table.append(separator)
+    if title:
+        table.append(f"    | {title:^{sum(col_widths) + len(col_widths) - 1}} |")
+        table.append(separator)
     table.append(row_format.format(*headers))
     table.append(separator)
     
     for row in rows:
         table.append(row_format.format(*row))
         table.append(separator)
+
+    # If message then each row has to be individually formatted
+    if message:
+        for row in table:
+            print(f"{message} '{row.encode("unicode_escape").decode("utf-8")}'")
+        return ""
     
     # Print the table
     return "\n".join(table).encode("unicode_escape").decode("utf-8")

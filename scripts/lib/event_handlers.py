@@ -6,7 +6,6 @@ from datetime import datetime
 
 def initialize_round_data():
     global roundData
-    print("CONSOLE_MESSAGE Initializing round data")
     roundData = {
         "stats": [], "gridposLogs": [], "cycleDestroyLogs": [], 
         "conquerLogs": [], "sacrificeLogs": [], "chatLogs": [], 
@@ -15,25 +14,35 @@ def initialize_round_data():
 
 def initialize_players():
     global alivePlayers, deadPlayers, stats
-    print("CONSOLE_MESSAGE Initializing players")
     alivePlayers = []
     deadPlayers = []
     stats = {}
 
-def handle_auth_player(data):
+def handle_player_entered_grid(data):
     global authPlayers
     nickname = data[1]
     ip = data[2]
     login = None
     auth = False
-    authPlayers.append({"nickname": nickname, "ip": ip, "auth": auth, "login": login, "currentMatchPoints": 0})
+    if(not check_player_exists(nickname)):
+        authPlayers.append(
+            {"nickname": nickname, 
+            "ip": ip, 
+            "auth": auth, 
+            "login": login, 
+            "active": False,
+            "currentMatchPoints": 0, 
+            "kills": 0, 
+            "deaths": 0, 
+            "time": 0})
+
 
 def handle_player_login(data):
     global authPlayers
     nickname = data[1]
     login = data[2]
     for player in authPlayers:
-        if player["nickname"] == nickname:
+        if player["nickname"] == nickname and not player["auth"]:
             player["auth"] = True
             player["login"] = login
 
@@ -44,25 +53,20 @@ def handle_game_time(data):
         start_time = timer.time()
         handle_check_auth()
 
-def handle_positions(data):
-    global alivePlayers, stats
-    for i in range(1, len(data)):
-        alivePlayers.append(data[i])
-        stats[data[i]] = {
-            "UserName": data[i], "kills": 0, "deaths": 0, "timeAlive": 0, "totalTime": 0, 
-            "zonePoints": 0, "holesTaken": 0, "myHolesUsed": 0, "position": i-1, 
-            "timeMaxRubber": 0, "TotalRubber": 0, "TotalSpeed": 0, "gridposCounter": 0, 
-            "turns": 0, "lols": 0, "soloGanks": 0
-        }
+
 
 def handle_basezone_conquered(data):
     conquerers.clear()
 
-def handle_conquerer_team(data):
-    global roundData
-    thisConqPlayers = [player for player in alivePlayers if player in conquerers]
-    conqLog = {"usernames": thisConqPlayers, "score": int(data[2]), "elapsedTime": elapsed_time()}
-    roundData["conquerLogs"].append(conqLog)
+def handle_check_auth():
+    global authPlayers
+    for player in authPlayers:
+        if not player["auth"]:
+            print(f"CENTER_PLAYER_MESSAGE {player['nickname']} '0xfcba03Login to save your stats!'")
+            print(f"PLAYER_MESSAGE {player['nickname']} '0xfcba03You need to make an account to save your stats here!'")
+            print(f"PLAYER_MESSAGE {player['nickname']} '0xfcba03To learn how, ask someone for help!'")
+            print(f"PLAYER_MESSAGE {player['nickname']} '0xfcba03You can type by pressing T or enter.'")
+
 
 def handle_current_map(data):
     global roundData, time, roundCounter, recordMatch
@@ -73,70 +77,16 @@ def handle_current_map(data):
         initialize_players()
         roundData["roundNum"] = roundCounter
 
-def handle_sacrifice(data):
-    global roundData
-    sacrifice = {"usedHole": data[1], "createdHole": data[2], "holed": data[3], "elapsedTime": elapsed_time()}
-    roundData["sacrificeLogs"].append(sacrifice)
-
-def handle_round_commencing():
-    global num_players
-    zone_size = 2;
-    if num_players > 12:
-        zone_size = 12;
-    elif num_players >= 2:
-        zone_size = num_players;
-    elif num_players < 2:
-        print("CONSOLE_MESSAGE 0x00ffffWaiting for more players to join...");
-    print("CONSOLE_MESSAGE Zone size adjusted for "+str(zone_size)+" players.");
-    print("MAP_FILE Titanoboa/sumobar/dynamic-0."+str(zone_size)+".aamap.xml");
-    print("SIZE_FACTOR 1");
-
-
-def handle_new_round():
-    global paused, roundCounter, matchData, authPlayers
-    if roundCounter > 0 and not paused:
-        matchData["rounds"].append(roundData)
-        if(recordMatch):
-            post_data(authPlayers, ROUND_URL)
-    paused = False
-
-def handle_match_ended(line):
-    global recordMatch, matchData, roundCounter
-    if recordMatch:
-        for player in stats:
-            if player != "ADMIN":
-                roundData["stats"].append(stats[player])
-        roundData["roundNum"] = roundCounter
-        matchData["rounds"].append(roundData)
-        matchData["date"] = datetime.now().isoformat()
-        post_data(matchData, MATCH_URL)
-        matchData = {"rounds": [], "totalTime": 0, "teamStats": [], "players": []}
-        roundCounter = 0
-        for player in authPlayers:
-            player["currentMatchPoints"] = 0
-
-def handle_match_score_team(data):
-    global matchData, matchTeamStats, authPlayers
-    score = int(data[1])
-    playerName = data[2]
+def handle_death_frag(data):
+    global authPlayers
+    victim = data[1]
+    killer = data[2]
     for player in authPlayers:
-        if player["nickname"] == playerName:
-            player["currentMatchPoints"] += score
-            matchData["players"].append(player)
+        if player["nickname"] == victim:
+            player["deaths"] += 1
+        if player["nickname"] == killer:
+            player["kills"] += 1
 
-
-def handle_basezone_conquerer(data):
-    global conquerers            
-    conquerers.append(data[1])
-
-def handle_cycle_destroyed(data):
-    global alivePlayers, deadPlayers, roundData
-    cycleDestroy = {"username": data[1], "posX": float(data[2]), "posY": float(data[3]), "elapsedTime": data[7]}
-    roundData["cycleDestroyLogs"].append(cycleDestroy)
-    if data[1] in alivePlayers:
-        alivePlayers.remove(data[1])
-    deadPlayers.append(data[1])
-    cycleDestroy["predator"] = data[9] if len(data) > 9 else (data[1] if data[8] not in ["BASEZONE_CONQUERED", "OTHER"] else "zone" if data[8] == "BASEZONE_CONQUERED" else "self")
 
 def handle_admin_command(data):
     global paused, roundCounter, recordMatch, matchData, num_players
@@ -145,6 +95,72 @@ def handle_admin_command(data):
         roundCounter -= 1
     elif data[4].lower() == "start_new_match":
         handle_new_match()
+
+def handle_basezone_conquerer(data):
+    global conquerers            
+    conquerers.append(data[1])
+
+def handle_chat(data):
+    global roundData
+    if "\\" not in data:
+        msg = ' '.join(data[2:])
+        chatLog = {"username": data[1], "message": msg, "elapsedTime": elapsed_time()}
+
+
+def handle_grid_pos(data):
+    global gridpos, time, roundData
+    if time >= 0:
+        roundData["totalTime"] = time
+
+
+def handle_match_ended(line):
+    global recordMatch, matchData, roundCounter
+    print("CONSOLE_MESSAGE 0x00ffffMatch ended. GG! Recorded: " + str(recordMatch))
+    if recordMatch:
+        print("Final Match Data: ")
+        # stringify matchData
+        print(matchData)
+        post_data(matchData, MATCH_URL)
+        matchData = {"rounds": [], "totalTime": 0, "teamStats": [], "players": [], "playerCounts": []}
+        roundCounter = 0
+        for player in authPlayers:
+            player["currentMatchPoints"] = 0
+            player["kills"] = 0
+            player["deaths"] = 0
+            player["time"] = 0
+        fetch_and_generate_motd()
+        print_stats()
+
+
+def handle_match_score(data):
+    global matchData, matchTeamStats, authPlayers
+    found = False
+    score = int(data[1])
+    playerName = data[2]
+    for player in authPlayers:
+        print("Checking player: " + playerName + " " + player["nickname"])
+        print(player)
+        print(matchData)
+        if player["nickname"] == playerName or player["login"] == playerName:
+            player["currentMatchPoints"] += score
+            found = True
+            match_add_if_not_includes(player, matchData)
+
+def handle_invalid_command(data):
+    global authPlayers
+    command = data[1]
+    nickname = data[2]
+    filtered_players = list(filter(lambda x: x["nickname"] == nickname, authPlayers))
+    
+    if filtered_players and filtered_players[0]["auth"]:
+        player = filtered_players[0]
+        if command == "/stats":
+            send_stats(player)
+    else:
+        if filtered_players:
+            print(f"PLAYER_MESSAGE {filtered_players[0]['nickname']} '0xaa0000You need to login to use commands!'")
+        else:
+            print(f"PLAYER_MESSAGE {nickname} '0xaa0000Player not found!'")
 
 
 def handle_new_match():
@@ -157,39 +173,90 @@ def handle_new_match():
     matchData = {"rounds": [], "totalTime": 0}
     initialize_round_data()
 
-def handle_chat(data):
-    global roundData
-    if "\\" not in data:
-        msg = ' '.join(data[2:])
-        chatLog = {"username": data[1], "message": msg, "elapsedTime": elapsed_time()}
-        roundData["chatLogs"].append(chatLog)
-
-def handle_remove_player(data):
-    global num_players, recordMatch
-    num_players -= 1;
-    recordMatch = num_players > 1
-
-def handle_check_auth():
-    global authPlayers
-    for player in authPlayers:
-        if not player["auth"]:
-            print(f"CENTER_PLAYER_MESSAGE {player['nickname']} '0xfcba03Login to save your stats!'")
-
 def handle_new_player(data):
-    global num_players, recordMatch
+    global num_players, recordMatch, authPlayers
     num_players += 1;
+    nickname = data[1]
     recordMatch = num_players > 1
+    filtered_players = list(filter(lambda x: x["nickname"] == nickname, authPlayers))
+    
+    if filtered_players:
+        player = filtered_players[0]
+        player["active"] = True
+    elif(not check_player_exists(nickname)):
+        authPlayers.append({
+            "nickname": nickname, 
+            "ip": None, 
+            "auth": False, 
+            "login": None, 
+            "active": True,
+            "currentMatchPoints": 0, 
+            "kills": 0, 
+            "deaths": 0, 
+            "time": 0
+        })
     if(num_players == 2):
         print("CONSOLE_MESSAGE 0x00ffffNew match starting. Good luck, have fun!");
         print("START_NEW_MATCH")
+        print("RESPAWN_TIME -1")
 
-def handle_grid_pos(data):
-    global gridpos, time, roundData
-    gridpos[data[1]] = [float(data[2]), float(data[3]), data[4], data[5], float(data[6]), float(data[7]), data[9]]
-    rgridpos = {
-        "username": data[1], "posX": float(data[2]), "posY": float(data[3]), "dirX": int(data[4]), "dirY": int(data[5]),
-        "speed": float(data[6]), "rubber": float(data[7]), "team": data[9], "braking": int(data[10]), "brakeReservoir": float(data[11]), "elapsedTime": float(data[12])
-    }
-    if time >= 0:
-        roundData["gridposLogs"].append(rgridpos)
-        roundData["totalTime"] = time
+
+def handle_new_round():
+    global paused, roundCounter, matchData, authPlayers, num_players
+    if roundCounter > 0 and not paused:
+        if(recordMatch):
+            post_data(authPlayers, ROUND_URL)
+            matchData["playerCounts"].append(num_players)
+    paused = False
+
+
+
+
+def handle_positions(data):
+    global alivePlayers, stats
+    for i in range(1, len(data)):
+        alivePlayers.append(data[i])
+        stats[data[i]] = {
+            "UserName": data[i], "kills": 0, "deaths": 0, "timeAlive": 0, "totalTime": 0, 
+            "zonePoints": 0, "holesTaken": 0, "myHolesUsed": 0, "position": i-1, 
+            "timeMaxRubber": 0, "TotalRubber": 0, "TotalSpeed": 0, "gridposCounter": 0, 
+            "turns": 0, "lols": 0, "soloGanks": 0
+        }
+
+def handle_player_rename(data):
+    global authPlayers
+    oldName = data[1]
+    newName = data[2]
+    ip = data[3]
+    for player in authPlayers:
+        if player["nickname"] == oldName:
+            player["nickname"] = newName
+
+
+def handle_remove_player(data):
+    global num_players, recordMatch, authPlayers
+    nickname = data[1]
+    for player in authPlayers:
+        if player["nickname"] == nickname or player["login"] == nickname:
+            authPlayers.remove(player)
+    num_players -= 1;
+    recordMatch = num_players > 1
+    if(not recordMatch):
+        print("RESPAWN_TIME 0")
+    # remove from authPlayers
+
+def handle_round_commencing():
+    global num_players
+    zone_size = 2;
+    if num_players > 12:
+        zone_size = 12;
+    elif num_players >= 2:
+        zone_size = num_players;
+    elif num_players < 2:
+        print("RESPAWN_TIME 0")
+        print("CONSOLE_MESSAGE 0x00ffffWaiting for more players to join...");
+        print("CONSOLE_MESSAGE 0x00ccccEnjoy instant respawns to practice!.");
+    print("CONSOLE_MESSAGE Zone size adjusted for "+str(zone_size)+" players.");
+    print("MAP_FILE Titanoboa/sumobar/dynamic-0."+str(zone_size)+".aamap.xml");
+    print("SIZE_FACTOR 1");
+
