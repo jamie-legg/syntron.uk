@@ -59,13 +59,13 @@ export class RoundFactory {
       if (existingPlayer) {
         const updatedPlayer = await prisma.player.update({
           where: { id: existingPlayer.id },
-          data: { nickname, ip },
+          data: { nickname },
         })
       } else {
         const newPlayer = await prisma.player.create({
           data: {
             nickname,
-            ip,
+            ip: ip || '',
             login,
             points: 0,
             matches: 0,

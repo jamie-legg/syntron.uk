@@ -62,10 +62,10 @@ def handle_check_auth():
     global authPlayers
     for player in authPlayers:
         if not player["auth"]:
-            print(f"CENTER_PLAYER_MESSAGE {player['nickname']} '0xfcba03Login to save your stats!'")
             print(f"PLAYER_MESSAGE {player['nickname']} '0xfcba03You need to make an account to save your stats here!'")
             print(f"PLAYER_MESSAGE {player['nickname']} '0xfcba03To learn how, ask someone for help!'")
             print(f"PLAYER_MESSAGE {player['nickname']} '0xfcba03You can type by pressing T or enter.'")
+            print(f"PLAYER_MESSAGE {player['nickname']} '0xfc4e03Login to save your stats!'")
 
 
 def handle_current_map(data):
@@ -176,10 +176,14 @@ def handle_new_match():
 def handle_new_player(data):
     global num_players, recordMatch, authPlayers
     num_players += 1;
-    nickname = data[1]
+    nickname = data[2]
+    login = None
+    auth = False
+    if "@" in nickname:
+        login = nickname
+        auth = True
     recordMatch = num_players > 1
     filtered_players = list(filter(lambda x: x["nickname"] == nickname, authPlayers))
-    
     if filtered_players:
         player = filtered_players[0]
         player["active"] = True
@@ -187,8 +191,8 @@ def handle_new_player(data):
         authPlayers.append({
             "nickname": nickname, 
             "ip": None, 
-            "auth": False, 
-            "login": None, 
+            "auth": auth,
+            "login": login,
             "active": True,
             "currentMatchPoints": 0, 
             "kills": 0, 
@@ -235,7 +239,7 @@ def handle_player_rename(data):
 
 def handle_remove_player(data):
     global num_players, recordMatch, authPlayers
-    nickname = data[1]
+    nickname = data[2]
     for player in authPlayers:
         if player["nickname"] == nickname or player["login"] == nickname:
             authPlayers.remove(player)
