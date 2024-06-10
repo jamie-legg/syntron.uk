@@ -17,6 +17,13 @@ export interface GameStats {
   soloGanks: number;
 }
 
+export type Rank = {
+  login: string;
+  points: number;
+  matches: number;
+  kd: number;
+}
+
 export type RoundPlayerEntry = {
   nickname: string
   ip: string

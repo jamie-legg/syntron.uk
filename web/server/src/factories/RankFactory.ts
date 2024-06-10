@@ -1,5 +1,7 @@
 import { Router, Request, Response } from "express";
 import { prisma } from "..";
+import { Rank } from "../types";
+import { emptyRank } from "../utils";
 
 export class RankFactory {
   public static routes(): Router {
@@ -27,7 +29,7 @@ export class RankFactory {
       });
 
       if (!player) {
-        res.status(404).json({ message: "Player not found" });
+        res.status(200).json({ ...emptyRank, login: login });
         return;
       }
 
@@ -37,9 +39,9 @@ export class RankFactory {
       const playerRank = await prisma.player.count({
         where: {
           points: {
-            gt: player.points
-          }
-        }
+            gt: player.points,
+          },
+        },
       });
 
       // Calculate the player's rank (1-based index)
@@ -64,10 +66,12 @@ export class RankFactory {
       },
     });
 
-    const ranksWithKd = ranks.map(({login, points, matches, kills, deaths}) => {
-      const kd = Math.floor((kills / deaths) * 100) / 100 || 0;
-      return {login, points, matches, kd };
-    })
+    const ranksWithKd = ranks.map(
+      ({ login, points, matches, kills, deaths }) => {
+        const kd = Math.floor((kills / deaths) * 100) / 100 || 0;
+        return { login, points, matches, kd };
+      }
+    ) as Rank[];
 
     res.status(200).json(ranksWithKd);
   }
