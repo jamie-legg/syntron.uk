@@ -2,8 +2,11 @@ import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
 import { TabsTrigger, TabsList, TabsContent, Tabs } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
-import { UserProfile } from "types"
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
+
+export interface UserProfile {
+  name: string
+}
 
 export function ProfileScreen({ user }: { user: UserProfile }) {
   return (

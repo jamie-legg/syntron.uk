@@ -27,9 +27,6 @@ const UserPage = ({
             <ProfileScreen
               user={{
                 name: params.user,
-                imageUrl: "https://avatars.githubusercontent.com/u/1094227?v=4",
-                email: "legggg@gmail.com",
-                id: "1",
               }}
             />
           )}
