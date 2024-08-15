@@ -3,6 +3,7 @@ from lib.config import *
 from lib.event_handlers import *
 from lib.event_checker import EventChecker
 from lib.utils import *
+from lib.load_env import load_env
 import threading
 import sys
 
@@ -12,6 +13,9 @@ event_checker = EventChecker()
 
 # Initialize the MOTD when the script starts
 fetch_and_generate_motd()
+
+# load in environment variables
+load_env()
 
 # Start the scheduler thread
 scheduler_thread = threading.Thread(target=schedule_motd_update)

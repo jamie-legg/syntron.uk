@@ -1,8 +1,8 @@
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
-import Aside from "./auth/AuthAside";
-import { Button } from "./ui/button";
+import Aside from "../auth/AuthAside";
+import { Button } from "../ui/button";
 import Image from "next/image";
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { ArchiveBoxXMarkIcon, Square2StackIcon, UserIcon, PowerIcon } from '@heroicons/react/16/solid';

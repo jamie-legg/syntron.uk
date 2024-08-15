@@ -1,24 +1,31 @@
-"use client";;
+"use client";
 import React from "react";
 import { Canvas } from "@react-three/fiber";
 import { CameraControls } from "@/app/camera/CameraControls";
-import Navigation from "@/components/Navigation";
+import Navigation from "@/components/nav/Navigation";
 
 const ImprovePage: React.FC = () => {
   return (
     <>
       <Navigation>
         <div className="flex-col w-full">
-          <div className="flex w-full justify-between m-2">
-            <div className="w-96 border-sky-500 border-y">1</div>
-            <div className="w-96 border-sky-500 border-y">
-  
-  2</div>
-            <div className="w-96 border-sky-500 border-y">3</div>
-          </div>
-          <div className="flex w-full">
-            <div className="border-2 border-sky-500 rounded-lg w-full">4</div>
-            <div className="border-2 border-sky-500 rounded-lg w-full">5</div>
+          <div className="flex flex-col w-full justify-between my-2 mx-4">
+            <ul className="space-y-8 text-2xl">
+              <li>Fight for and maintain space.</li>
+
+              <li>Prioritise space in the center of the zone.</li>
+
+              <li>Become comfortable in a tight space.</li>
+
+              <li>Watch your opponents. Consider their intentions.</li>
+
+              <li>Use speed to your advantage.</li>
+
+              <li>
+                Consider the consequences of your actions; flat walls let you go
+                fast, but allow for little maneuverability.
+              </li>
+            </ul>
           </div>
         </div>
       </Navigation>

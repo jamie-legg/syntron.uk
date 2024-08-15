@@ -14,8 +14,8 @@ import {
   UserGroupIcon,
   WrenchIcon,
 } from "@heroicons/react/24/outline";
-import { DashboardTile } from "@/app/dashboard/DashboardTile";
 import { SessionProvider } from "next-auth/react";
+import { NavItem } from "./NavItem";
 
 const routes = [
   {
@@ -99,14 +99,14 @@ export default function   Navigation({
             <div className="flex w-full justify-start h-full">
               <div className="flex-col z-50 h-full w-48 overflow-y-auto bg-black/30 border-r border-sky-200 border-opacity-20 mt-0.5">
                 {routes.map((route) => (
-                  <DashboardTile
+                  <NavItem
                     active={path === route.link}
                     href={route.link}
                     key={route.text}
                     icon={route.icon}
                   >
                     {route.text}
-                  </DashboardTile>
+                  </NavItem>
                 ))}
               </div>
 

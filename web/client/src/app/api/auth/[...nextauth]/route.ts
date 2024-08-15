@@ -4,12 +4,21 @@ import DiscordProvider from 'next-auth/providers/discord';
 import GoogleProvider from 'next-auth/providers/google';
 
 // Typing for the user profile from your Auth Server
-interface UserProfile {
-  provider: string;
-  id: string;
-  name: string;
-  email: string;
-  image: string;
+interface GameHistory {
+name: string;
+date: string;
+server: string;
+region: string;
+quality: number;
+players: [
+  {
+    team: string;
+    player: string;
+    score: number;
+    place: number;
+
+  }
+]
 }
 
 const handler = NextAuth({
@@ -49,15 +58,11 @@ const handler = NextAuth({
         };
 
         // API call to your Auth Server to create or update the user
-        const authServerResponse: AxiosResponse<UserProfile> = await axios.post(`${process.env.SYN_AUTH_URL!}/auth`, userPayload);
-
-        console.log('authServerResponse', authServerResponse);
-
-        console.log('userPayload', userPayload);
+        console.log('env', process.env.NELG_HISTORY_API_URL);
         
-        
-        if (authServerResponse.status !== 200) {
-          throw new Error("Failed to create or update user on the auth server");
+        const authServerResponse: AxiosResponse<GameHistory[]> = await axios.get(`${process.env.NELG_HISTORY_API_URL!+discordUser.id}`);
+        if(authServerResponse.data !== null){
+          userPayload.name = authServerResponse.data[0].players[0].player;
         }
 
         return userPayload;
@@ -82,12 +87,7 @@ const handler = NextAuth({
           image: profile.picture,
         };
 
-        // API call to your Auth Server to create or update the user
-        const authServerResponse: AxiosResponse<UserProfile> = await axios.post(`${process.env.SYN_AUTH_URL!}/auth`, userPayload);
 
-        if (authServerResponse.status !== 200) {
-          throw new Error("Failed to create or update user on the auth server");
-        }
 
         return userPayload;
       },

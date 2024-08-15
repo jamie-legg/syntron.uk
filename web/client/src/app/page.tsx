@@ -3,7 +3,7 @@ import React from "react";
 import { Canvas } from "@react-three/fiber";
 import { CameraControls } from "./camera/CameraControls";
 import { usePathname, useRouter } from "next/navigation";
-import Navigation from "@/components/Navigation";
+import Navigation from "@/components/nav/Navigation";
 import {
   NEWS_TEXT,
   SUGGESTION_TEXT,
@@ -47,29 +47,27 @@ const IndexPage: React.FC = () => {
     <>
       <Navigation>
         <div className="flex-col w-full">
-          <div className="flex flex-col xl:flex-row w-full justify-between my-2">
-            <Section
-              title="Welcome"
-              sections={[WELCOME_TEXT, MARKETING_TEXT, LETS_GO_TEXT]}
-            />
-            <Section title="News" sections={[NEWS_TEXT, SUGGESTION_TEXT]} />
-            <Section
-              title="Game Status"
-              action={<Button>Stats</Button>}
-              sections={[`${serversMetadata?.players_online} players online`]}
-            >
-              <div className="flex mt-16">
-                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-black/10 ring-1 ring-white/5">
-                  {loading ? "Loading..." : error ? "Error" : ""}
-                  <p className="font-bold"></p>
-                  {serversData.map((server, index) => (
-                    <div key={index}>
-                      <ServerCard server={server} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Section>
+          <div className="flex flex-col w-full justify-between my-2 mx-4">
+            <span className="text-2xl my-7">
+              Welcome back,
+              <span className="border border-sky-300 border-dashed px-2 rounded-lg ml-2">
+                User.
+              </span>
+            </span>
+
+            <span className="text-xl font-thin my-4">
+              This resource acts as a hub for the competetive side of
+              Retrocycles. If you want to find out more about who we are and
+              what we do, check out{" "}
+              <a className="font-normal hover:underline" href="/discord">
+                Discord
+              </a>
+              .
+            </span>
+
+            <span className="text-xl border-b border-sky-500 border-opacity-20 pb-8 my-4 ">
+              The grid awaits.
+            </span>
           </div>
         </div>
       </Navigation>

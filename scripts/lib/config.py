@@ -33,3 +33,20 @@ recordMatch = False
 start_time = 0
 paused = False
 time = 0
+
+def ukConfig():
+    global API_URL, ROUND_URL, MATCH_URL, RANKS_URL
+    API_URL = 'http://host.docker.internal:3300/'
+    ROUND_URL = API_URL + 'round'
+    MATCH_URL = API_URL + 'match'
+    RANKS_URL = API_URL + 'ranks'
+    print("SERVER_NAME UK Server")
+
+def usConfig():
+    
+    global API_URL, ROUND_URL, MATCH_URL, RANKS_URL
+    API_URL = 'http://host.docker.internal:3300/'
+    ROUND_URL = API_URL + 'round'
+    MATCH_URL = API_URL + 'match'
+    RANKS_URL = API_URL + 'ranks'
+    print("SERVER_NAME US Server")

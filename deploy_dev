@@ -3,6 +3,17 @@ echo "Deploying script.py"
 cp -r scripts/ armagetron/syn_us_settings/pub/scripts/
 cp -r scripts/ armagetron/syn_uk_settings/pub/scripts/
 
+# util function to take a region and generate the env path
+function get_env_path() {
+  echo "armagetron/syn_${1}_settings/pub/scripts/lib/load_env.py"
+}
+
+# Add env specific settings
+echo "Deploying env specific settings"
+# Use sed to find the REGION_ENV variable in with the util function and replace it with the correct value
+sed -i "" "s|REGION_ENV = 'us'|REGION_ENV = 'us'|g" $(get_env_path us) 
+sed -i "" "s|REGION_ENV = 'uk'|REGION_ENV = 'uk'|g" $(get_env_path uk)
+
 # Rename the script to script-out.py
 mv armagetron/syn_us_settings/pub/scripts/script.py armagetron/syn_us_settings/pub/scripts/script-out.py
 mv armagetron/syn_uk_settings/pub/scripts/script.py armagetron/syn_uk_settings/pub/scripts/script-out.py

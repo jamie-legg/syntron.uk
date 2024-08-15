@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { CameraControls } from "@/app/camera/CameraControls";
-import Navigation from "@/components/Navigation";
+import Navigation from "@/components/nav/Navigation";
 import { getRanks } from "@/services/api";
 import { TRanking } from "@/types/TApi";
 import RankCard from "@/components/RankCard";

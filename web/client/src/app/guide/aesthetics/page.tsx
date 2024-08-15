@@ -2,7 +2,7 @@
 import React from "react";
 import { Canvas } from "@react-three/fiber";
 import { CameraControls } from "@/app/camera/CameraControls";
-import Navigation from "@/components/Navigation";
+import Navigation from "@/components/nav/Navigation";
 import Section from "@/components/Section";
 import {
   AESTHETICS_TEXT,

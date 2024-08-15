@@ -1,5 +1,6 @@
 # lib/utils.py
 from lib.config import *
+from lib.server_info import updateServerInfo
 import time as timer
 import json
 import urllib.request
@@ -42,6 +43,7 @@ def fetch_and_generate_motd():
     headers = ["User", "Points", "Matches", "K/D"]
     motd = motd_base + generate_ascii_table(headers, ranks_data)
     print("MESSAGE_OF_DAY " + motd)
+    updateServerInfo()
 
 def schedule_motd_update():
     while True:
@@ -104,21 +106,16 @@ def generate_ascii_table(headers, rows, title=None, message=None):
     
     # Create a format string for each row
     row_format = "    | " + " | ".join(["{:<" + str(width) + "}" for width in col_widths]) + " |"
-    separator = "    +-" + "-+-".join(["-" * width for width in col_widths]) + "-+"
 
     
     # Generate the table
     table = []
-    table.append(separator)
     if title:
         table.append(f"    | {title:^{sum(col_widths) + len(col_widths) - 1}} |")
-        table.append(separator)
     table.append(row_format.format(*headers))
-    table.append(separator)
     
     for row in rows:
         table.append(row_format.format(*row))
-        table.append(separator)
 
     # If message then each row has to be individually formatted
     if message:
