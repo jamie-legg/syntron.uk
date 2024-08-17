@@ -1,25 +1,11 @@
+import { GameHistory } from '@/types/THistory';
 import axios, { AxiosResponse } from 'axios';
 import NextAuth from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
 import GoogleProvider from 'next-auth/providers/google';
 
 // Typing for the user profile from your Auth Server
-interface GameHistory {
-name: string;
-date: string;
-server: string;
-region: string;
-quality: number;
-players: [
-  {
-    team: string;
-    player: string;
-    score: number;
-    place: number;
 
-  }
-]
-}
 
 const handler = NextAuth({
   providers: [
@@ -58,9 +44,9 @@ const handler = NextAuth({
         };
 
         // API call to your Auth Server to create or update the user
-        console.log('env', process.env.NELG_HISTORY_API_URL);
+        console.log('env', process.env.NEXT_PUBLIC_HISTORY_API_URL);
         
-        const authServerResponse: AxiosResponse<GameHistory[]> = await axios.get(`${process.env.NELG_HISTORY_API_URL!+discordUser.id}`);
+        const authServerResponse: AxiosResponse<GameHistory[]> = await axios.get(`${process.env.NEXT_PUBLIC_HISTORY_API_URL!+'?id=tst&type=history&discord='+discordUser.id}&limit=1`);
         if(authServerResponse.data !== null){
           userPayload.name = authServerResponse.data[0].players[0].player;
         }
@@ -68,30 +54,30 @@ const handler = NextAuth({
         return userPayload;
       },
     }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      authorization: {
-        params: {
-          redirect_uri: process.env.GOOGLE_REDIRECT_URI,
-        },
-      },
-          profile: async (profile, tokens) => {
+    // GoogleProvider({
+    //   clientId: process.env.GOOGLE_CLIENT_ID!,
+    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    //   authorization: {
+    //     params: {
+    //       redirect_uri: process.env.GOOGLE_REDIRECT_URI,
+    //     },
+    //   },
+    //       profile: async (profile, tokens) => {
             
 
-        // Payload to send to your Auth Server
-        const userPayload = {
-          id: profile.sub,
-          name: profile.name,
-          email: profile.email,
-          image: profile.picture,
-        };
+    //     // Payload to send to your Auth Server
+    //     const userPayload = {
+    //       id: profile.sub,
+    //       name: profile.name,
+    //       email: profile.email,
+    //       image: profile.picture,
+    //     };
 
 
 
-        return userPayload;
-      },
-    }),
+    //     return userPayload;
+    //   },
+    // }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
 });

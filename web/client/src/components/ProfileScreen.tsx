@@ -3,12 +3,23 @@ import { TabsTrigger, TabsList, TabsContent, Tabs } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
+import axios from "axios"
 
 export interface UserProfile {
   name: string
 }
 
 export function ProfileScreen({ user }: { user: UserProfile }) {
+const getHistory = async (name:string) => {
+  const url = process.env.NEXT_PUBLIC_HISTORY_API_URL + `?id=tst&type=history&p=${name}&teammateData=1`;
+  const response = await axios.get(url);
+  console.log(response.data);
+  return response
+}
+
+getHistory(user.name);
+
+
   return (
     <div className="grid md:grid-cols-[300px_1fr] gap-8 max-w-5xl mx-auto px-4 py-12">
       <div className="flex flex-col items-center gap-6">

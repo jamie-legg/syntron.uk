@@ -43,14 +43,14 @@ const LeaderboardsPage: React.FC = () => {
   return (
     <>
       <Navigation>
-        <div className="fixed inset-y-0 z-0 flex flex-col mt-16 w-full md:w-max px-8">
-          <div className="flex w-full md:w-max grow flex-col gap-y-5 overflow-y-auto -mr-4 xl:px-6">
-            <ul role="list" className="grid md:grid-cols-2 lg:grid-cols-3 ml-4 mt-4">
+        <div className="fixed inset-y-0 z-0 flex flex-col mt-16 w-full md:w-max">
+          <div className="flex w-full md:w-max grow flex-col gap-y-5 overflow-y-auto">
+            <ul role="list" className="grid md:grid-cols-2 lg:grid-cols-3 ml-0.5 mt-0.5">
               {loading ? (
                 <GridSkeleton />
               ) : (
                 ranks.map((rank, index) => (
-                  <li className="m-2" key={index}>
+                  <li className="mr-0.5 mb-0.5" key={index}>
                     <RankCard key={index} playerRank={rank} />
                   </li>
                 ))

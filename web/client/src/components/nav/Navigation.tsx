@@ -110,7 +110,7 @@ export default function   Navigation({
                 ))}
               </div>
 
-              <div className="w-284 overflow-y-auto flex justify-around">
+              <div className="w-full">
                 {children}
               </div>
             </div>

@@ -17,24 +17,40 @@ export interface GameStats {
   soloGanks: number;
 }
 
+export interface GameHistory {
+  name: string;
+  date: string;
+  server: string;
+  region: string;
+  quality: number;
+  players: [
+    {
+      team: string;
+      player: string;
+      score: number;
+      place: number;
+    }
+  ];
+}
+
 export type Rank = {
   login: string;
   points: number;
   matches: number;
   kd: number;
-}
+};
 
 export type RoundPlayerEntry = {
-  nickname: string
-  ip: string
-  auth: boolean
-  login: string
-  currentMatchPoints: number
-  kills: number
-  deaths: number
-  time: number
-  active: boolean
-}
+  nickname: string;
+  ip: string;
+  auth: boolean;
+  login: string;
+  currentMatchPoints: number;
+  kills: number;
+  deaths: number;
+  time: number;
+  active: boolean;
+};
 
 export interface GridposLog {
   username: string;
@@ -70,7 +86,7 @@ export interface Round {
   cycleDestroyLogs: CycleDestroyLog[];
   conquerLogs: ConquerLog[];
   sacrificeLogs: any[];
-  chatLogs: any[]; 
+  chatLogs: any[];
   roundNum: number;
   totalTime: number;
 }

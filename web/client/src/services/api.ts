@@ -26,5 +26,13 @@ export const getRanks = async () => {
     return await api.get('/ranks') as TGetRanksResponse
 }
 
+export const getHistory = async () => {
+    return await api.get(`/history`);
+}
+
+export const getUserHistory = async (user:string) => {
+    return await api.get(`/history/${name}`);
+}
+
 // Export the API client
 export default api;

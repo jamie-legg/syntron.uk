@@ -1,5 +1,6 @@
 import { TRanking } from "@/types/TApi";
 import { ArrowDownIcon, ArrowUpIcon, Bars2Icon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 export default function RankCard({playerRank}: {playerRank: TRanking}) {
     const {
@@ -16,8 +17,9 @@ export default function RankCard({playerRank}: {playerRank: TRanking}) {
         lastSeen,
     } = playerRank;
   return (
+    <Link href={`/u/${name}`}>
   <div
-  className="rounded-lg border border-sky-900 text-card-foreground shadow-sm w-full xl:max-w-md p-2 xl:p-6 grid gap-4 relative"
+  className="rounded-lg border border-sky-900 hover:border-yellow-500 text-card-foreground shadow-sm w-full xl:max-w-md p-2 xl:p-6 grid gap-4 relative"
   data-v0-t="card"
 >
       <div className="flex items-center justify-between">
@@ -48,5 +50,6 @@ export default function RankCard({playerRank}: {playerRank: TRanking}) {
         <div className="text-xs text-right">Last Seen: {lastSeen}</div>
       </div>
     </div>
+    </Link>
   )
 }

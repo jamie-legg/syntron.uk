@@ -27,3 +27,7 @@ However, for many players, this isn't enough. Here we discuss how to create comp
 export const AESTHETICS_WALLS_TEXT = `The walls are technically two different entites. First, the objects left in the wake of a cycle, the trails of light used to both pierce and secure territory.`
 
 export const AESTHETICS_WALLS_BOUNDARY_TEXT = `Secondly, the rim. The edge boundary of the grid itself.`
+
+export const STEAM_URL = "https://store.steampowered.com/app/1306180/Retrocycles/"
+
+export const GAME_URL = 'https://retrocycles.net/'

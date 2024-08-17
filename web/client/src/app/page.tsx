@@ -18,6 +18,7 @@ import { getServers } from "@/services/api";
 import { ServerCard } from "@/components/ServerCard";
 import Section from "@/components/Section";
 import { Button } from "@/components/ui/button";
+import Dashboard from "@/components/Dashboard";
 
 const IndexPage: React.FC = () => {
   const [loading, setLoading] = React.useState(true);
@@ -46,30 +47,7 @@ const IndexPage: React.FC = () => {
   return (
     <>
       <Navigation>
-        <div className="flex-col w-full">
-          <div className="flex flex-col w-full justify-between my-2 mx-4">
-            <span className="text-2xl my-7">
-              Welcome back,
-              <span className="border border-sky-300 border-dashed px-2 rounded-lg ml-2">
-                User.
-              </span>
-            </span>
-
-            <span className="text-xl font-thin my-4">
-              This resource acts as a hub for the competetive side of
-              Retrocycles. If you want to find out more about who we are and
-              what we do, check out{" "}
-              <a className="font-normal hover:underline" href="/discord">
-                Discord
-              </a>
-              .
-            </span>
-
-            <span className="text-xl border-b border-sky-500 border-opacity-20 pb-8 my-4 ">
-              The grid awaits.
-            </span>
-          </div>
-        </div>
+        <Dashboard />
       </Navigation>
       <Canvas style={{ height: "100vh", background: "#000014" }}>
         <CameraControls />
