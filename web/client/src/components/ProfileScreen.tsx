@@ -4,34 +4,55 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
 import axios from "axios"
+import { GameHistory } from "@/types/THistory"
+import { useSession } from "next-auth/react"
+import { useEffect, useState } from "react"
+import { getUserHistory, getUserOverview } from "@/services/api"
 
 export interface UserProfile {
   name: string
 }
 
 export function ProfileScreen({ user }: { user: UserProfile }) {
-const getHistory = async (name:string) => {
-  const url = process.env.NEXT_PUBLIC_HISTORY_API_URL + `?id=tst&type=history&p=${name}&teammateData=1`;
-  const response = await axios.get(url);
-  console.log(response.data);
-  return response
-}
+  const [gameHistory, setGameHistory] = useState<GameHistory[]>([]);
 
-getHistory(user.name);
+  const { data: session, status } = useSession();
 
+  useEffect(() => {
+    if (status === "authenticated") {
+
+      getUserOverview(user.name).
+      then((response) => {
+          console.log("response", response);
+        }
+        )
+
+      getUserHistory(user.name)
+        .then((response) => {
+            console.log('response', response);
+          if(response.data.data){
+          setGameHistory(response.data.data);
+
+          }
+
+        })
+        .catch((e) => console.error("Failed to fetch history:", e));
+    }
+  }, [status]);
 
   return (
     <div className="grid md:grid-cols-[300px_1fr] gap-8 max-w-5xl mx-auto px-4 py-12">
       <div className="flex flex-col items-center gap-6">
         <Avatar className="w-28 h-28">
           <AvatarImage alt="@shadcn" src="/placeholder-avatar.jpg" />
-          <AvatarFallback>JP</AvatarFallback>
+          <AvatarFallback>{user.name[0]
+}
+          </AvatarFallback>
         </Avatar>
         <div className="grid gap-2 text-center">
           <h2 className="text-2xl font-bold">{user.name}</h2>
           <p className="text-sky-300 dark:text-sky-200">@{user.name}</p>
           <p className="text-sm leading-relaxed text-sky-300 dark:text-sky-200">
-            Passionate gamer and community member. Loves playing RPGs and strategy games.
           </p>
         </div>
       </div>
@@ -79,26 +100,16 @@ getHistory(user.name);
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    <TableRow>
-                      <TableCell>League of Legends</TableCell>
-                      <TableCell>Victory</TableCell>
-                      <TableCell>April 25, 2023</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Dota 2</TableCell>
-                      <TableCell>Defeat</TableCell>
-                      <TableCell>April 22, 2023</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Overwatch</TableCell>
-                      <TableCell>Victory</TableCell>
-                      <TableCell>April 18, 2023</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Counter-Strike: Global Offensive</TableCell>
-                      <TableCell>Defeat</TableCell>
-                      <TableCell>April 15, 2023</TableCell>
-                    </TableRow>
+                  
+                  {gameHistory.length > 0 && gameHistory.map((game, index) => {
+                    return (
+                      <TableRow key={index}>
+                        <TableCell>{game.region}</TableCell>
+                        <TableCell>{game.server}</TableCell>
+                        <TableCell>{game.date}</TableCell>
+                      </TableRow>
+                    );
+                  })}
                   </TableBody>
                 </Table>
               </div>

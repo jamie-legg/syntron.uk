@@ -30,8 +30,12 @@ export const getHistory = async () => {
     return await api.get(`/history`);
 }
 
-export const getUserHistory = async (user:string) => {
-    return await api.get(`/history/${name}`);
+export const getUserHistory = async (name:string) => {
+    return await api.get(`/history?name=${name}`);
+}
+
+export const getUserOverview = async (name:string) => {
+    return await api.get(`/overview?name=${name}`);
 }
 
 // Export the API client

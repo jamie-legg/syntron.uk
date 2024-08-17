@@ -24,7 +24,7 @@ export default function Dashboard() {
   return (
     <div className="flex-col w-full">
       <div className="flex flex-col w-full justify-between my-2 mx-4">
-        <span className="text-2xl my-7">
+        <span className="text-2xl my-3 text-sky-300">
           Welcome{session?.user ? " back" : ""},
           {session?.user ? (
             <span className="px-2 rounded-lg">{session.user.name}</span>
@@ -38,21 +38,21 @@ export default function Dashboard() {
           <>
             <span className="text-xl font-thin my-4">
               This resource acts as a hub for the competitive side of{" "}
-              <a className="font-normal hover:underline" href={GAME_URL}>
+              <a className="font-normal hover:underline text-sky-300" href={GAME_URL}>
                 Retrocycles.
               </a>{" "}
               If you want to find out more about who we are and what we do,
               check out{" "}
-              <a className="font-normal hover:underline" href="/discord">
+              <a className="font-normal hover:underline text-sky-300" href="/discord">
                 Discord
               </a> or{" "}
-                <a className="font-normal hover:underline" href={STEAM_URL}>
+                <a className="font-normal hover:underline text-sky-300" href={STEAM_URL}>
                 the game on Steam
                 </a>
               .
             </span>
 
-            <span className="text-xl border-b border-sky-500 border-opacity-20 pb-8 my-4 ">
+            <span className="text-xl border-b border-sky-500 text-sky-200 border-opacity-20 pb-8 my-4 ">
               The grid awaits.
             </span>
           </>
@@ -60,7 +60,7 @@ export default function Dashboard() {
         {history.length > 0 ? (
           <RecentHistory history={history} />
         ) : (
-          <span className="text-xl font-thin my-4">
+          <span className="text-xl font-thin my-4 text-sky-300">
             Login to view recent games.
           </span>
         )}

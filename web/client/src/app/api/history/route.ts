@@ -4,6 +4,18 @@ import axios from "axios";
 
 export async function GET(request: Request) {
   try {
+
+    // Check for a specific user
+    const url = new URL(request.url);
+    const name = url.searchParams.get("name");
+
+    if(name) {
+    const userHistory = await axios.get(
+      `${process.env.NEXT_PUBLIC_HISTORY_API_URL}?id=tst&type=history&p=${name}&limit=50`
+    );
+    return new Response(JSON.stringify(userHistory.data), nocache());
+    }
+
     // Fetch the entire dataset
     const historyResponse = await axios.get(`${process.env.NEXT_PUBLIC_HISTORY_API_URL}?id=tst&type=history&limit=10`);
     const history = await historyResponse.data;

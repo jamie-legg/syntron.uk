@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation";
 import { NavBar } from "./Navbar";
 import {
   ArrowDownTrayIcon,
-  ArrowsPointingOutIcon,
   HomeIcon,
   KeyIcon,
   MegaphoneIcon,
@@ -18,8 +17,6 @@ import {
 import { SessionProvider } from "next-auth/react";
 import { NavItem } from "./NavItem";
 import AddToQueue from "./GameQueue/AddToQueue";
-import { Button } from "@headlessui/react";
-import ToggleClientExpand from "./ToggleClientExpand";
 
 const routes = [
   {
@@ -93,9 +90,7 @@ export default function   Navigation({
   };
 
   return (
-    <SessionProvider>
-      <div className="z-10 fixed top-0 w-screen h-screen md:p-4 xl:p-8">
-        <div className="flex justify-center items-center h-full">
+ <div className="flex justify-center items-center h-full">
           <div className="w-full rounded-lg shadow-lg h-full relative text-sky-400 border border-sky-400 border-opacity-30 backdrop-filter backdrop-blur-xl pr-5 transition-all duration-200">
             <div className="mb-14 z-50 block">
               <NavBar getTitle={() => getRouteNameFromPath()} />
@@ -124,14 +119,11 @@ export default function   Navigation({
           </div>
 
           {/* Game Status Pane */}
-          <div className="absolute bottom-0 w-full z-10">
-            <div className="flex justify-between items-right bg-black border border-sky-500/30 rounded-xl px-2 py-1">
-  <ToggleClientExpand />
+          <div className="absolute bottom-0 w-full h-16 z-10">
+            <div className="flex justify-end items-right h-full bg-black border border-sky-500/30 rounded-xl px-2">
               <AddToQueue />
             </div>
             </div>
         </div>
-      </div>
-    </SessionProvider>
   );
 }
