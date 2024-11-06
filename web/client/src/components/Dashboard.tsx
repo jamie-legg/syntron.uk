@@ -52,13 +52,15 @@ export default function Dashboard() {
               .
             </span>
 
-            <span className="text-xl border-b border-sky-500 text-sky-200 border-opacity-20 pb-8 my-4 ">
+            <span className="text-xl border-b border-sky-500 text-sky-200 pb-8 my-4 ">
               The grid awaits.
             </span>
           </>
         )}
         {history.length > 0 ? (
-          <RecentHistory history={history} />
+          <div className="w-full">
+            <RecentHistory history={history} />
+          </div>
         ) : (
           <span className="text-xl font-thin my-4 text-sky-300">
             Login to view recent games.

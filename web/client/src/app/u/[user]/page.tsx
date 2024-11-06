@@ -4,10 +4,6 @@ import { Canvas } from "@react-three/fiber";
 import { CameraControls } from "@/app/camera/CameraControls";
 import Navigation from "@/components/nav/Navigation";
 import { ProfileScreen } from "@/components/ProfileScreen";
-import { useRouter } from "next/navigation";
-import { GameHistory } from "@/types/THistory";
-import { getUserHistory } from "@/services/api";
-import { useSession } from "next-auth/react";
 
 const UserPage = ({
   params,
@@ -19,7 +15,7 @@ const UserPage = ({
   return (
     <>
       <Navigation>
-        <div className="flex-col w-full">
+        <div className="flex-col w-full z-40">
             <ProfileScreen
               user={{
                 name: params.user,

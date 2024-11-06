@@ -30,7 +30,7 @@ export const NavBar = ({ getTitle }: { getTitle: () => string }) => {
         {name ? (
                 <Menu>
         <MenuButton className='h-max -mb-1.5'>
-                    <Button>
+                    <Button as="div">
           <Image src={image!} alt={name} width={32} height={32} className="rounded-full -mt-1 pb-1" />
           &nbsp;{name}
           
@@ -56,7 +56,7 @@ export const NavBar = ({ getTitle }: { getTitle: () => string }) => {
 
                 <UserIcon className="size-4 fill-sky-500/85" />
                 Profile
-                <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-[focus]:inline">⌘E</kbd>
+                {/* <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-[focus]:inline">⌘E</kbd> */}
               </button>
             </MenuItem>
 
@@ -67,7 +67,7 @@ export const NavBar = ({ getTitle }: { getTitle: () => string }) => {
               className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-sky-500/10">
                 <PowerIcon className="size-4 fill-sky-500/85" />
                 Sign Out
-                <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-[focus]:inline">⌘D</kbd>
+                {/* <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-[focus]:inline">⌘D</kbd> */}
               </button>
             </MenuItem>
           </MenuItems>

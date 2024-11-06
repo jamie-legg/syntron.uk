@@ -70,7 +70,7 @@ export default function RecentHistory({ history }: { history: GameHistory[] }) {
     }
   };
   return (
-    <div className="fixed inset-y-8 mt-20 z-0 flex flex-col xl:w-max border-t border-sky-300">
+    <div className="fixed inset-y-8 mt-20 z-0 flex flex-col w-[calc(100%-14rem)] border-t border-sky-600 border-opacity-50">
       <div className="flex w-full grow flex-col gap-y-5 overflow-y-auto">
         <ul role="list" className="grid grid-cols-2 xl:grid-cols-3 w-full">
           {history.map((game, index) => {

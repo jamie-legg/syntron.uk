@@ -101,7 +101,7 @@ export default function   Navigation({
               <NavBar getTitle={() => getRouteNameFromPath()} />
             </div>
             <div className="flex w-full justify-start h-full">
-              <div className="flex-col z-50 h-full w-48 overflow-y-auto bg-black/30 border-r border-sky-200 border-opacity-20 mt-0.5">
+              <div className="flex-col z-50 h-full w-48 overflow-y-auto border-r border-sky-200 border-opacity-20 mt-0.5">
                 {routes.map((route) => (
                   <NavItem
                     active={path === route.link}
@@ -126,7 +126,6 @@ export default function   Navigation({
           {/* Game Status Pane */}
           <div className="absolute bottom-0 w-full z-10">
             <div className="flex justify-between items-right bg-black border border-sky-500/30 rounded-xl px-2 py-1">
-  <ToggleClientExpand />
               <AddToQueue />
             </div>
             </div>
